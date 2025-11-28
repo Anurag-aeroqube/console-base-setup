@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FilterDefinition } from '@/types/data-management';
+import type { FilterDefinition } from '@/types/data-management';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
@@ -56,7 +56,7 @@ export default function FilterPanel({ filters, onChange }: FilterPanelProps) {
               ))}
             </select>
           )}
-          {filterValues[filter.key] && (
+          {filterValues[filter.key] as string && (
             <Button
               variant="ghost"
               size="sm"

@@ -1,4 +1,4 @@
-import { PaginationParams } from '@/types/data-management';
+import type { PaginationParams } from '@/types/data-management';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ChevronLeft, ChevronRight } from 'lucide-react';

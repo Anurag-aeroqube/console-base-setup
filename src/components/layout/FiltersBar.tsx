@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useRBAC } from '@/contexts/RBACContext';
 import { filterByPermission } from '@/lib/rbac';
 import type { FilterDefinition, ActionDefinition } from '@/types/data-management';

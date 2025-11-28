@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, ReactNode } from 'react';
+import { createContext, useContext, useMemo, type ReactNode } from 'react';
 import type { User, Role, PermissionString, AccessControl } from '@/types/rbac';
 import { checkPermission, checkRole } from '@/lib/rbac';
 

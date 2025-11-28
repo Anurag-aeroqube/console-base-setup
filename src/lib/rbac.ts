@@ -1,4 +1,4 @@
-import { User, Role, PermissionString } from '@/types/rbac';
+import { type User, type Role, type PermissionString } from '@/types/rbac';
 
 /**
  * Check if user has a specific permission
