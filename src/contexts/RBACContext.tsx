@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, ReactNode } from 'react';
-import { User, Role, PermissionString, AccessControl } from '@/types/rbac';
+import type { User, Role, PermissionString, AccessControl } from '@/types/rbac';
 import { checkPermission, checkRole } from '@/lib/rbac';
 
 interface RBACContextValue extends AccessControl {

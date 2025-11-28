@@ -1,4 +1,4 @@
-import { ActionDefinition } from '@/types/data-management';
+import type { ActionDefinition } from '@/types/data-management';
 import { Button } from '@/components/ui/button';
 
 interface ActionBarProps {

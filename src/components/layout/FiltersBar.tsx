@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useRBAC } from '@/contexts/RBACContext';
 import { filterByPermission } from '@/lib/rbac';
-import { FilterDefinition, ActionDefinition } from '@/types/data-management';
+import type { FilterDefinition, ActionDefinition } from '@/types/data-management';
 import FilterPanel from '@/components/data-management/FilterPanel';
 import ActionBar from '@/components/data-management/ActionBar';
 

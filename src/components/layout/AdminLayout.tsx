@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
-import SideNavContainer from '@/pages/sidenav/sideNavContainer';
+import SideNavContainer from '@/components/layout/sidenav/SideNavContainer';
 import AppBar from './AppBar';
 import FiltersBar from './FiltersBar';
 import ListView from './ListView';
@@ -22,12 +22,16 @@ export default function AdminLayout() {
           <FiltersBar />
           
           {/* List View - Main Content */}
-          <div className="flex-1 overflow-auto">
+          {/* <div className="flex-1 overflow-auto">
             <ListView />
+          </div> */}
+
+          <div className="flex-1 overflow-auto">
+            <Outlet /> 
           </div>
           
           {/* Footer - Pagination */}
-          <PaginationFooter />
+          {/* <PaginationFooter /> */}
         </SidebarInset>
       </div>
     </SidebarProvider>

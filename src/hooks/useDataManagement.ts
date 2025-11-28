@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { ListViewState, FilterParams, SortParams, PaginationParams } from '@/types/data-management';
+import type { ListViewState, FilterParams, SortParams, PaginationParams } from '@/types/data-management';
 
 interface UseDataManagementOptions {
   initialFilters?: FilterParams;

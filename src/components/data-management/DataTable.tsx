@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRBAC } from '@/contexts/RBACContext';
 import { filterByPermission } from '@/lib/rbac';
-import { ColumnDefinition, BulkActionDefinition } from '@/types/data-management';
+import type { ColumnDefinition, BulkActionDefinition } from '@/types/data-management';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ArrowUpDown } from 'lucide-react';

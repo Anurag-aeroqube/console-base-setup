@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import DataTable from '@/components/data-management/DataTable';
-import { ListViewConfig, ListViewState } from '@/types/data-management';
+import type { ListViewConfig, ListViewState } from '@/types/data-management';
 
 interface ListViewProps<T = unknown> {
   config: ListViewConfig<T>;
