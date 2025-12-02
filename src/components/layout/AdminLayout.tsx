@@ -10,8 +10,7 @@ export default function AdminLayout() {
   return (
     <SidebarProvider>
       <div className="flex w-full h-screen">
-        {/* Left Navigation Bar */}
-        <SideNavContainer />
+        <SideNavContainer  />
         
         {/* Right Main Content Area */}
         <SidebarInset className="flex flex-col flex-1 overflow-hidden">

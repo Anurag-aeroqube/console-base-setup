@@ -14,7 +14,11 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import type { Location, NavigateFunction } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
 // import logo from "@/assets/images/logos/logo.png";
+
+
  
 interface NavLink {
   label: string;
@@ -39,6 +43,7 @@ export default function SideNavView({
   navigate,
   navLinks,
 }: SideNavViewProps) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState<string | null>(null);
  
   const toggle = (label: string) => {
@@ -46,7 +51,7 @@ export default function SideNavView({
   };
  
   return (
-    <Sidebar className=" border-r bg-[#fbfbfb] flex flex-col">
+    <Sidebar className=" border-r  flex flex-col">
       {/* <div className=" flex items-center w-[70%] 2xl:h-[10vh] h-[16vh]  mx-auto ">
         <img src={logo} alt="logo" className="w-40" />
       </div> */}
@@ -64,8 +69,8 @@ export default function SideNavView({
                     <SidebarMenuButton
                       onClick={() => toggle(item.label)}
                       className={cn(
-                        "flex justify-between items-center px-6 py-2 rounded-md font-medium text-[15px]",
-                        "hover:bg-gray-100",
+                        "flex justify-between items-center px-6 py-2 w-[80%] mx-auto rounded-md font-medium text-base",
+                        " cursor-pointer",
                       )}
                     >
                       <div className="flex items-center gap-3">
@@ -91,10 +96,10 @@ export default function SideNavView({
                               isActive={activeChild}
                               onClick={() => navigate(child.href)}
                               className={cn(
-                                "px-2 py-2 rounded text-sm flex gap-3 font-medium",
+                                "px-2 py-2 rounded text-sm flex gap-3 h-auto cursor-pointer  font-medium",
                                 activeChild
-                                  ? "bg-gray-200 text-black"
-                                  : "text-gray-600 hover:bg-gray-100"
+                                  ? "bg-[#f9fafb]"
+                                  : "text-[#344054] "
                               )}
                             >
                               {child.icon}
@@ -110,10 +115,10 @@ export default function SideNavView({
                     isActive={isActive}
                     onClick={item.onClick ?? (() => navigate(item.href ?? "#"))}
                     className={cn(
-                      "flex items-center gap-3 px-6 py-2 rounded-md font-medium text-[15px]",
+                      "flex items-center gap-3 px-6 py-2 rounded-md w-[80%] mx-auto cursor-pointer font-medium text-[15px]",
                       isActive
-                        ? "bg-gray-200 text-black"
-                        : "text-gray-700 hover:bg-gray-100"
+                        ? "bg-[#f9fafb] text-[#101828]"
+                        : "text-gray-700 "
                     )}
                   >
                     {item.icon}
@@ -132,7 +137,8 @@ export default function SideNavView({
           onClick={() => navigate("/")}
           className="flex items-center gap-3 px-6 py-2  hover:bg-gray-200"
         >
-          Logout
+       {t(LOCALIZATION_KEYS.COMMON.LOGOUT)}
+
         </SidebarMenuButton>
       </SidebarFooter>
     </Sidebar>

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebar } from "@/components/ui/sidebar";
-// import ThemeButton from "@/contexts/ThemeButton";
-// import LanguageSwitcher from "@/i18n/languageSwitcher";
+import ThemeButton from "@/components/buttons/ThemeButton";
+import LanguageSwitcher from "@/components/buttons/LanguageSwitcherButton";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { LOCALIZATION_KEYS } from "@/i18n/keys";
 import {
@@ -44,18 +44,17 @@ export default function Header() {
   };
 
   return (
-    <div className="2xl:h-[6vh] h-[10vh] border-b flex items-center justify-between px-6 sticky top-0 z-10">
-      <p className="text-[28px] font-bold capitalize">
+    <div className="2xl:h-[6vh] h-[10vh] border-b  flex items-center justify-between px-6 sticky top-0 z-10">
+      <p className="text-xl font-bold capitalize">
         {displayTitle !== "404"
           ? t(`nav.${displayTitle}`) || t(LOCALIZATION_KEYS.COMMON.COMING_SOON)
           : t(LOCALIZATION_KEYS.COMMON.COMING_SOON)}
       </p>
 
-      {/* <div className="flex items-center gap-3">
-        <ThemeButton />
+      <div className="flex gap-5 items-center">
+        <ThemeButton  />
         <LanguageSwitcher />
-      </div> */}
-
+      <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex gap-2 items-center border rounded-md py-1 px-2 cursor-pointer">
@@ -84,6 +83,8 @@ export default function Header() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      </div>
+      </div>
     </div>
   );
 }

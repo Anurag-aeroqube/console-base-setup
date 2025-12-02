@@ -5,8 +5,8 @@ import App from "../App";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { Dashboard } from "./lazyImport";
 // import Loading from "./loading";
- 
 
+      
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
