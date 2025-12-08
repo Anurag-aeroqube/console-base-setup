@@ -1,105 +1,77 @@
-// import { useDataManagement } from '@/hooks/useDataManagement';
-// import AdminLayout from '@/components/layout/AdminLayout';
-// import ListView from '@/components/layout/ListView';
-// import FiltersBar from '@/components/layout/FiltersBar';
-// import PaginationFooter from '@/components/layout/PaginationFooter';
-// import type { ListViewConfig } from '@/types/data-management';
-// import type { User } from '@/types/rbac';
+import { useDataManagement } from "@/hooks/useDataManagement";
+import ListView from "@/components/layout/TableLayout";
+import FiltersBar from "@/components/layout/FiltersBar";
+import PaginationFooter from "@/components/layout/PaginationFooter";
+import axiosInstance from "@/api/axios";
+import type { ListViewConfig } from "@/types/data-management";
 
-// const columns: ListViewConfig<User>['columns'] = [
-//   {
-//     key: 'id',
-//     label: 'ID',
-//     sortable: true,
-//   },
-//   {
-//     key: 'fullName',
-//     label: 'Name',
-//     sortable: true,
-//   },
-//   {
-//     key: 'email',
-//     label: 'Email',
-//     sortable: true,
-//   },
-//   {
-//     key: 'roles',
-//     label: 'Roles',
-//     render: (value) => (value as string[]).join(', '),
-//   },
-// ];
+interface Lead {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  status?: string;
+}
 
-// const filters: ListViewConfig<User>['filters'] = [
-//   {
-//     key: 'search',
-//     label: 'Search',
-//     type: 'text',
-//     placeholder: 'Search users...',
-//   },
-//   {
-//     key: 'role',
-//     label: 'Role',
-//     type: 'select',
-//     options: [
-//       { label: 'Admin', value: 'admin' },
-//       { label: 'User', value: 'user' },
-//     ],
-//   },
-// ];
+const columns: ListViewConfig<Lead>["columns"] = [
+  { key: "name", label: "Lead Name", sortable: true },
+  { key: "email", label: "Email" },
+  { key: "phone", label: "Phone" },
+  { key: "status", label: "Status", sortable: true },
+];
 
-// const actions: ListViewConfig<User>['actions'] = [
-//   {
-//     key: 'create',
-//     label: 'Create User',
-//     permission: 'users:create',
-//     onClick: () => console.log('Create user'),
-//   },
-// ];
+const leadFilters: ListViewConfig<Lead>["filters"] = [
+  {
+    key: "search",
+    label: "Search Lead",
+    type: "text",
+    placeholder: "Search by name...",
+  },
+];
 
-// export default function UsersPage() {
-//   const {
-//     state,
-//     setFilters,
-//     setSorting,
-//     setPagination,
-//     setSelectedRows,
-//   } = useDataManagement({
-//     fetchData: async ({ filters, sort, pagination }) => {
-//       // Replace with your API call
-//       const response = await fetch('/api/users', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ filters, sort, pagination }),
-//       });
-//       const result = await response.json();
-//       return {
-//         data: result.data,
-//         total: result.pagination.total,
-//       };
-//     },
-//   });
+export default function LeadsPage() {
+  const { state, setFilters, setSorting, setPagination, setSelectedRows } =
+    useDataManagement<Lead>({
+      fetchData: async ({ filters, sort, pagination }) => {
+        const params: any = {
+          page: pagination.page,
+          limit: pagination.limit,
+          sortOrder: sort?.direction ?? "asc",
+        };
 
-//   return (
-//     <AdminLayout>
-//       <FiltersBar
-//         filters={filters}
-//         actions={actions}
-//         onFilterChange={setFilters}
-//       />
-//       <ListView
-//         config={{ columns, filters, actions }}
-//         state={state}
-//         onRowSelect={setSelectedRows}
-//         onSort={(field, direction) =>
-//           setSorting({ field, direction })
-//         }
-//       />
-//       <PaginationFooter
-//         pagination={state.pagination}
-//         onPageChange={(page) => setPagination({ page })}
-//         onLimitChange={(limit) => setPagination({ limit, page: 1 })}
-//       />
-//     </AdminLayout>
-//   );
-// }
+        if (filters.search) params.search = filters.search;
 
+        const res = await axiosInstance.get("/crm/leads", { params });
+
+        return {
+          data: res.data?.data ?? res.data?.results ?? [],
+          total: res.data?.pagination?.total ?? 0,
+        };
+      },
+    });
+
+  return (
+    <div className="p-6 space-y-4">
+      
+      <FiltersBar
+        filters={leadFilters}
+        actions={[]}
+        onFilterChange={(f) => setFilters(f as any)} // fixed rename
+      />
+
+      <ListView
+        config={{ columns, actions: [] }} //  filters removed (important)
+        state={state}
+        onRowSelect={setSelectedRows}
+        onSort={(field, direction) => setSorting({ field, direction })}
+      />
+
+      <PaginationFooter
+        pagination={state.pagination}
+        onPageChange={(page) => setPagination({ page })}
+        onLimitChange={(limit) => setPagination({ limit, page: 1 })}
+      />
+
+    </div>
+  );
+}

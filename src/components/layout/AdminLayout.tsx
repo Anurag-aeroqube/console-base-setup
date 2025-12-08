@@ -3,7 +3,7 @@ import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import SideNavContainer from '@/components/layout/sidenav/SideNavContainer';
 import AppBar from './AppBar';
 import FiltersBar from './FiltersBar';
-import ListView from './ListView';
+
 import PaginationFooter from './PaginationFooter';
 
 export default function AdminLayout() {
@@ -18,7 +18,7 @@ export default function AdminLayout() {
           <AppBar />
           
           {/* Filters And Other Actions */}
-          <FiltersBar />
+          {/* <FiltersBar /> */}
           
           {/* List View - Main Content */}
           {/* <div className="flex-1 overflow-auto">

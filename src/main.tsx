@@ -7,7 +7,7 @@ import router from "./routes/RouteContainer";
 
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  // <StrictMode>
       <RouterProvider router={router} />
-  </StrictMode>
+  // </StrictMode>
 );

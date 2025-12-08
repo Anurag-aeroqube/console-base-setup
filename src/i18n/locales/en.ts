@@ -1,5 +1,5 @@
 import { LOCALIZATION_KEYS } from "../keys";
- 
+
 export default {
   translation: {
     // NAV
@@ -7,22 +7,45 @@ export default {
     [LOCALIZATION_KEYS.NAV.USERS]: "Users",
     [LOCALIZATION_KEYS.NAV.MANAGE_USERS]: "Manage Users",
     [LOCALIZATION_KEYS.NAV.ROLES]: "Roles",
- 
+
     // BUTTONS
     [LOCALIZATION_KEYS.BUTTONS.SAVE]: "Save",
     [LOCALIZATION_KEYS.BUTTONS.CANCEL]: "Cancel",
     [LOCALIZATION_KEYS.BUTTONS.SUBMIT]: "Submit",
     [LOCALIZATION_KEYS.BUTTONS.LOGIN]: "Login",
     [LOCALIZATION_KEYS.BUTTONS.SIGNUP]: "Sign Up",
- 
+
+    //MESSAGES
+    [LOCALIZATION_KEYS.MESSAGES.EMPTY_SEARCH_TITLE]:
+      "We couldn’t find what you’re looking for",
+    [LOCALIZATION_KEYS.MESSAGES.EMPTY_SEARCH_SUBTEXT]:
+      "Try searching with different terms",
+    [LOCALIZATION_KEYS.MESSAGES.NO_DATA]: "No data available",
+
     // COMMON
     [LOCALIZATION_KEYS.COMMON.LOGOUT]: "Logout",
     [LOCALIZATION_KEYS.COMMON.SETTINGS]: "Settings",
     [LOCALIZATION_KEYS.COMMON.SEARCH]: "Search",
     [LOCALIZATION_KEYS.COMMON.NO_DATA]: "No data available",
- 
+    [LOCALIZATION_KEYS.COMMON.SEARCH_PLACEHOLDER]: "Search...",
+    [LOCALIZATION_KEYS.COMMON.NO_RESULTS]: "No results found",
+    [LOCALIZATION_KEYS.COMMON.PAGE]: "Page",
+    [LOCALIZATION_KEYS.COMMON.OF]: "of",
+    [LOCALIZATION_KEYS.COMMON.ITEMS]: "Items",
+    [LOCALIZATION_KEYS.COMMON.COLUMNS]: "Columns",
+
     // LANG SWITCHER
     [LOCALIZATION_KEYS.LANG.ENGLISH]: "English",
-    [LOCALIZATION_KEYS.LANG.HINDI]: "Hindi"
+    [LOCALIZATION_KEYS.LANG.HINDI]: "Hindi",
+
+    // Customer Info
+
+    //Column Headers
+    [LOCALIZATION_KEYS.COLS.NAME]: "Lead Name",
+    [LOCALIZATION_KEYS.COLS.CITY]: "City",
+    [LOCALIZATION_KEYS.COLS.STAGE]: "Stage",
+    [LOCALIZATION_KEYS.COLS.SALES_PERSON]: "Salesperson",
+    [LOCALIZATION_KEYS.COLS.PHONE]: "Phone",
+    [LOCALIZATION_KEYS.COLS.ANURAG]: "Anurag",
   },
 };

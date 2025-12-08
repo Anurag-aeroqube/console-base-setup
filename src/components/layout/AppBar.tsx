@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebar } from "@/components/ui/sidebar";
-import ThemeButton from "@/components/buttons/ThemeButton";
-import LanguageSwitcher from "@/components/buttons/LanguageSwitcherButton";
+import ThemeButton from "@/components/buttons/IconButton";
+import LanguageSwitcher from "@/components/buttons/IconAndLabelButton";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { LOCALIZATION_KEYS } from "@/i18n/keys";
 import {
@@ -61,7 +61,7 @@ export default function Header() {
             {userData.avatar_url ? (
               <img className="size-7 rounded-full object-cover" src={userData.avatar_url} />
             ) : (
-              <div className="size-7 rounded-full bg-charcoal text-white flex items-center justify-center">
+              <div className="size-7 rounded-full bg-charcoal border bg-primary flex items-center justify-center">
                 {getInitials(userData.fullName)}
               </div>
             )}

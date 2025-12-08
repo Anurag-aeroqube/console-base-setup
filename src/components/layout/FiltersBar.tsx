@@ -25,7 +25,7 @@ export default function FiltersBar({
   const visibleActions = filterByPermission(actions, user);
 
   return (
-    <div className=" bg-background px-6 py-4 flex items-center justify-between gap-4">
+    <div className=" bg-background px-6  flex items-center justify-between gap-4">
       {visibleFilters.length > 0 && (
         <FilterPanel
           filters={visibleFilters}

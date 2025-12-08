@@ -1,178 +1,313 @@
-import { useState, useEffect } from 'react';
-import { useRBAC } from '@/contexts/RBACContext';
-import { filterByPermission } from '@/lib/rbac';
-import type { ColumnDefinition, BulkActionDefinition } from '@/types/data-management';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowUpDown } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useTranslation } from "react-i18next";
+import SearchInput from "@/components/inputs/SearchInputs";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
+import AddIcon from "@/assets/icons/add.svg?react";
+import  DownloadIcon  from "@/assets/icons/download.svg?react";
 
-interface DataTableProps<T = unknown> {
-  columns: ColumnDefinition<T>[];
+
+
+export type Column<T> = {
+  key: keyof T;
+  label: string;
+  visible: boolean;
+  width?: number; 
+  transformer?: (value: any) => string;
+};
+
+type PaginationType = 'simple' | 'numbered' | 'detailed';
+
+type Props<T> = {
   data: T[];
-  selectedRows?: string[];
-  sorting?: { field: string; direction: 'asc' | 'desc' } | null;
-  onRowSelect?: (rowIds: string[]) => void;
-  onSort?: (field: string, direction: 'asc' | 'desc') => void;
-  onRowClick?: (row: T) => void;
-  bulkActions?: BulkActionDefinition[];
-  getRowId?: (row: T) => string;
-}
+  columns: Column<T>[];
+  onSearch: (query: string) => void;
+  onPageChange: (page: number) => void;
+  page: number;
+  totalPages: number;
+  total?: number;
+  limit?: number;
+  onLimitChange?: (limit: number) => void;
+  paginationType?: PaginationType;
+  containerClassName?: string;
+};
 
-export default function DataTable<T = unknown>({
-  columns,
+export default function DataTable<T extends { [key: string]: any }>({
   data,
-  selectedRows = [],
-  sorting,
-  onRowSelect,
-  onSort,
-  onRowClick,
-  bulkActions = [],
-  getRowId = (row: T) => (row as { id: string }).id,
-}: DataTableProps<T>) {
-  const { user } = useRBAC();
-  const [selected, setSelected] = useState<string[]>(selectedRows);
+  columns,
+  onSearch,
+  onPageChange,
+  page,
+  totalPages,
+  total = 0,
+  limit = 10,
+  onLimitChange = () => {},
+  paginationType = 'detailed',
+   containerClassName = "",
+}: Props<T>) {
+  const [toggleBtn, setToggleBtn] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [visibleCols, setVisibleCols] = useState(
+    columns.map(col => ({ ...col, width: col.width || 150 }))
+  );
+  const [columnSearch, setColumnSearch] = useState("");
+  const [resizing, setResizing] = useState<{ key: keyof T; startX: number; startWidth: number } | null>(null);
+  const [rowHeights, setRowHeights] = useState<{ [key: number]: number }>({});
+  const [resizingRow, setResizingRow] = useState<{ index: number; startY: number; startHeight: number } | null>(null);
+  
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { t } = useTranslation();
 
-  // Sync selected rows with prop
   useEffect(() => {
-    setSelected(selectedRows);
-  }, [selectedRows]);
+    const timeout = setTimeout(() => {
+      onSearch(searchQuery);
+    }, 400);
 
-  // Filter columns by permission
-  const visibleColumns = filterByPermission(columns, user);
-  const visibleBulkActions = filterByPermission(bulkActions, user);
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
 
-  const handleSelectAll = (checked: boolean) => {
-    const allIds = data.map(getRowId);
-    const newSelected = checked ? allIds : [];
-    setSelected(newSelected);
-    onRowSelect?.(newSelected);
+  const toggleColumn = (key: keyof T) => {
+    setVisibleCols((prev) =>
+      prev.map((col) =>
+        col.key === key ? { ...col, visible: !col.visible } : col
+      )
+    );
   };
 
-  const handleSelectRow = (rowId: string, checked: boolean) => {
-    const newSelected = checked
-      ? [...selected, rowId]
-      : selected.filter(id => id !== rowId);
-    setSelected(newSelected);
-    onRowSelect?.(newSelected);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setToggleBtn(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Resize handlers for columns
+  const handleMouseDown = (e: React.MouseEvent, key: keyof T, currentWidth: number) => {
+    e.preventDefault();
+    setResizing({ key, startX: e.clientX, startWidth: currentWidth });
   };
 
-  const handleSort = (field: string) => {
-    if (!onSort) return;
-    const direction = sorting?.field === field && sorting.direction === 'asc'
-      ? 'desc'
-      : 'asc';
-    onSort(field, direction);
+  // Resize handlers for rows
+  const handleRowMouseDown = (e: React.MouseEvent, index: number, currentHeight: number) => {
+    e.preventDefault();
+    setResizingRow({ index, startY: e.clientY, startHeight: currentHeight });
   };
 
-  const isAllSelected = selected.length === data.length && data.length > 0;
-  const isIndeterminate = selected.length > 0 && selected.length < data.length;
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Column resizing - independent width
+      if (resizing) {
+        const diff = e.clientX - resizing.startX;
+        const newWidth = Math.max(50, resizing.startWidth + diff);
+
+        setVisibleCols((prev) =>
+          prev.map((col) =>
+            col.key === resizing.key ? { ...col, width: newWidth } : col
+          )
+        );
+      }
+
+      // Row resizing
+      if (resizingRow) {
+        const diff = e.clientY - resizingRow.startY;
+        const newHeight = Math.max(30, resizingRow.startHeight + diff);
+
+        setRowHeights((prev) => ({
+          ...prev,
+          [resizingRow.index]: newHeight,
+        }));
+      }
+    };
+
+    const handleMouseUp = () => {
+      setResizing(null);
+      setResizingRow(null);
+    };
+
+    if (resizing || resizingRow) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [resizing, resizingRow]);
 
   return (
-    <div className="w-full">
-      {/* Bulk Actions Bar */}
-      {selected.length > 0 && visibleBulkActions.length > 0 && (
-        <div className="mb-4 p-2 bg-muted rounded-md flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">
-            {selected.length} selected
-          </span>
-          {visibleBulkActions.map((action) => (
-            <Button
-              key={action.key}
-              variant={action.variant || 'outline'}
-              size="sm"
-              onClick={() => {
-                const selectedData = data.filter(row => 
-                  selected.includes(getRowId(row))
-                );
-                action.onClick(selectedData);
-              }}
-            >
-              {action.icon}
-              {action.label}
-            </Button>
-          ))}
-        </div>
-      )}
+<div
+  className={`flex flex-col border rounded-md
+  ${containerClassName ? containerClassName : "xl:max-h-[78vh] 2xl:max-h-[80vh] 2xl:min-h-[10vh]"}`}
+>
+      <div className="flex items-center justify-between w-full py-2 px-2  bg-background">
+        <div className="flex gap-3 justify-center items-center">
+            <p className="font-semibold text-lg">Anurag</p>
+           <AddIcon className="w-6 h-6 text-background" />
+           <DownloadIcon className="w-6 h-6 text-red-500" />
 
-      {/* Table */}
-      <div className="border rounded-md overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-muted">
-            <tr>
-              {onRowSelect && (
-                <th className="w-12 p-4">
-                  <Checkbox
-                    checked={isAllSelected}
-                    onCheckedChange={handleSelectAll}
-                    ref={(el) => {
-                      if (el) {
-                        el.indeterminate = isIndeterminate;
-                      }
-                    }}
-                  />
-                </th>
+
+        </div>
+        <div className="relative">
+          <Button
+            ref={buttonRef}
+            className="px-3 py-2 cursor-pointer  rounded-xl"
+            onClick={() => setToggleBtn(!toggleBtn)}
+            variant="ghost"
+            size="icon"
+          >
+            <GiHamburgerMenu />
+          </Button>
+          <div
+            ref={menuRef}
+            className={`absolute right-0 mt-2 2xl:w-[15vw] xl:w-[20vw] border bg-background rounded-md shadow-md z-10 p-2 space-y-2 transition-opacity
+      ${toggleBtn ? "opacity-100 visible " : "opacity-0 invisible"}
+    `}
+          >
+            <SearchInput
+              value={columnSearch}
+              onChange={setColumnSearch}
+              label={t(LOCALIZATION_KEYS.COMMON.COLUMNS)}
+              size="sm"
+              debounce={0}
+              clearable={true}
+              loading={false}
+              className="2xl:w-[14vw] xl:w-[19vw] "
+            />
+
+            <div className="min-h-[10vh] xl:max-h-[40vh] 2xl:max-h-[25vh] overflow-y-auto space-y-2">
+              {visibleCols.filter((col) =>
+                t(col.label).toLowerCase().includes(columnSearch.toLowerCase())
+              ).length > 0 ? (
+                visibleCols
+                  .filter((col) =>
+                    t(col.label)
+                      .toLowerCase()
+                      .includes(columnSearch.toLowerCase())
+                  )
+                  .map((col) => (
+                    <label
+                      key={String(col.key)}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={col.visible}
+                        onChange={() => toggleColumn(col.key)}
+                        className="cursor-pointer accent-primary"
+                      />
+                      <span className="capitalize">{t(col.label)}</span>
+                    </label>
+                  ))
+              ) : (
+                 <div className="flex flex-col items-center h-[20vh] justify-center gap-1 py-8 text-center text-muted-foreground">
+        <p className="font-medium text-foreground">
+          {t(LOCALIZATION_KEYS.MESSAGES.EMPTY_SEARCH_TITLE)}
+        </p>
+        <p className="text-sm">
+          {t(LOCALIZATION_KEYS.MESSAGES.EMPTY_SEARCH_SUBTEXT)}
+        </p>
+      </div>
               )}
-              {visibleColumns.map((column) => (
-                <th
-                  key={column.key}
-                  className="p-4 text-left font-medium"
-                  style={{ width: column.width }}
-                >
-                  <div className="flex items-center gap-2">
-                    {column.label}
-                    {column.sortable && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleSort(column.key)}
-                      >
-                        <ArrowUpDown className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                </th>
-              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className=" xl:flex-1  overflow-auto   ">
+        <table className="w-full" style={{ tableLayout: 'fixed' }}>
+          <thead className="text-left  text-sm border text-muted-foreground sticky top-0 bg-background z-5">
+            <tr>
+              {visibleCols
+                .filter((col) => col.visible)
+                .map((col) => (
+                  <th 
+                    key={String(col.key)} 
+                    className="p-3 font-medium border-r border-b last:border-r-0 relative"
+                    style={{ 
+                      width: `${col.width}px`, 
+                      maxWidth: `${col.width}px`,
+                      minWidth: `${col.width}px`
+                    }}
+                  >
+                    <div className="flex items-center justify-between overflow-hidden">
+                      <span className="truncate block">{t(col.label)}</span>
+                      <div
+                        className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary hover:w-1.5 transition-all flex-shrink-0"
+                        onMouseDown={(e) => handleMouseDown(e, col.key, col.width || 150)}
+                      />
+                    </div>
+                  </th>
+                ))}
             </tr>
           </thead>
-          <tbody>
-            {data.map((row) => {
-              const rowId = getRowId(row);
-              return (
-                <tr
-                  key={rowId}
-                  className="border-t hover:bg-muted/50 cursor-pointer"
-                  onClick={() => onRowClick?.(row)}
+          <tbody className="text-sm divide-y bg-background text-foreground">
+            {data.length > 0 ? (
+              data.map((item, index) => (
+                <tr 
+                  key={index}
+                  className="relative"
+                  style={{ 
+                    height: rowHeights[index] ? `${rowHeights[index]}px` : 'auto'
+                  }}
                 >
-                  {onRowSelect && (
-                    <td className="p-4">
-                      <Checkbox
-                        checked={selected.includes(rowId)}
-                        onCheckedChange={(checked) =>
-                          handleSelectRow(rowId, checked as boolean)
-                        }
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </td>
-                  )}
-                  {visibleColumns.map((column) => (
-                    <td
-                      key={column.key}
-                      className="p-4"
-                      style={{ textAlign: column.align || 'left' }}
-                    >
-                      {column.render
-                        ? column.render((row as Record<string, unknown>)[column.key], row)
-                        : String((row as Record<string, unknown>)[column.key] ?? '')}
-                    </td>
-                  ))}
+                  {visibleCols
+                    .filter((col) => col.visible)
+                    .map((col) => (
+                      <td 
+                        key={String(col.key)} 
+                        className="p-3 border-r last:border-r-0 relative"
+                        style={{ 
+                          width: `${col.width}px`,
+                          maxWidth: `${col.width}px`,
+                          minWidth: `${col.width}px`,
+                          height: rowHeights[index] ? `${rowHeights[index]}px` : 'auto',
+                          verticalAlign: 'top'
+                        }}
+                        title={col.transformer ? col.transformer(item[col.key]) : item[col.key] || "-"}
+                      >
+                        <div className="overflow-hidden text-ellipsis whitespace-nowrap block">
+                          {col.transformer
+                            ? col.transformer(item[col.key])
+                            : item[col.key] || "-"}
+                        </div>
+                        {/* Row resize handle - only on first column */}
+                        {col === visibleCols.filter(c => c.visible)[0] && (
+                          <div
+                            className="absolute bottom-0 left-0 right-0 h-1 cursor-row-resize hover:bg-primary hover:h-1.5 transition-all z-10"
+                            onMouseDown={(e) => handleRowMouseDown(e, index, rowHeights[index] || 40)}
+                          />
+                        )}
+                      </td>
+                    ))}
                 </tr>
-              );
-            })}
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={visibleCols.filter((c) => c.visible).length}
+                  className="text-center py-6 h-[40vh] "
+                >
+                  {searchQuery
+                    ? `No results found for "${searchQuery}"`
+                    : "No data available"}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
     </div>
   );
 }
-

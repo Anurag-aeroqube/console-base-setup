@@ -23,12 +23,14 @@ import { LOCALIZATION_KEYS } from "@/i18n/keys";
 interface NavLink {
   label: string;
   href?: string;
+  permission?: string;
   icon?: React.ReactNode;
   onClick?: () => void;
   children?: {
     label: string;
     href: string;
     icon?: React.ReactNode;
+    permission?: string;
   }[];
 }
  
@@ -135,7 +137,7 @@ export default function SideNavView({
       <SidebarFooter className="p-4 border-t mt-auto">
         <SidebarMenuButton
           onClick={() => navigate("/")}
-          className="flex items-center gap-3 px-6 py-2  hover:bg-gray-200"
+          className="flex justify-center items-center gap-3 px-6 py-2  hover:bg-accent cursor-pointer"
         >
        {t(LOCALIZATION_KEYS.COMMON.LOGOUT)}
 
