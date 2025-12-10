@@ -40,7 +40,7 @@ export default function PaginationFooter({
   // Generate page numbers for numbered pagination
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
-    const maxVisible = 5; // Show max 5 page numbers at a time
+    // const maxVisible = 5; // Show max 5 page numbers at a time
 
     // If total pages are 6 or less, show all pages
     if (totalPages <= 6) {

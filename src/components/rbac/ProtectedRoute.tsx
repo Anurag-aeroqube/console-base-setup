@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useRBAC } from '@/contexts/RBACContext';
-import { PermissionString, Role } from '@/types/rbac';
+import type { PermissionString, Role } from '@/types/rbac';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;

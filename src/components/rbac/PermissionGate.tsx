@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { useRBAC } from '@/contexts/RBACContext';
-import { PermissionString, Role } from '@/types/rbac';
+import type { PermissionString, Role } from '@/types/rbac';
 
 interface PermissionGateProps {
   children: ReactNode;

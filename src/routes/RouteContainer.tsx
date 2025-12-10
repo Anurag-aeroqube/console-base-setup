@@ -1,5 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
-import { Suspense } from "react";
+// import { Suspense } from "react";
  
 import App from "../App";
 import AdminLayout from "@/components/layout/AdminLayout";

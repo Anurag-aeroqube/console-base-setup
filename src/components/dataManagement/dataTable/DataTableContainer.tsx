@@ -35,7 +35,7 @@ export default function DataTableContainer<T extends { [key: string]: any }>({
   onDownloadClick,
 }: Props<T>) {
   const [toggleBtn, setToggleBtn] = useState(false);
-  const [searchQuery, ] = useState("");
+  const [searchQuery, _] = useState("");
   const [visibleCols, setVisibleCols] = useState(
     columns.map((col) => ({ ...col, width: col.width || 150 }))
   );
