@@ -81,7 +81,7 @@ export default function DataTableView<T extends { [key: string]: any }>({
 
   return (
     <div
-      className={`flex flex-col border rounded-md
+      className={`flex flex-col border rounded-md overflow-hidden
       ${
         containerClassName
           ? containerClassName
@@ -90,7 +90,7 @@ export default function DataTableView<T extends { [key: string]: any }>({
     >
       {/* Header */}
       <div className="flex items-center justify-between w-full py-2 px-2 bg-background">
-        <div className="flex gap-3 justify-center items-center">
+        <div className="flex gap-3 justify-center px-1 items-center">
           <p className="font-semibold text-lg">{headerTitle ?? ""}</p>
 
               {showSettingButton && (

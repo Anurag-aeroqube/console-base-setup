@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-base: ui-sans-serif, system-ui;
+  --font-base: 'Roboto', ui-sans-serif, system-ui;
   --color-bg-light: #ffffff;
   --color-bg-dark: #000000;
   --color-text-light: #000000;
@@ -123,6 +123,7 @@
     @apply border-border outline-ring/50;
   }
   body {
+    font-family: var(--font-base);
     @apply bg-background text-foreground;
   }
 }

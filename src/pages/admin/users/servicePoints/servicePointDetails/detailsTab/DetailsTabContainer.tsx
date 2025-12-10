@@ -5,9 +5,8 @@ import {
   mockParameters,
   mockServicePointGroups,
   mockLinkedAccounts,
-  mockConsumers
+  mockConsumers,
 } from "@/pages/admin/users/servicePoints/mockData";
-
 
 type ParameterRow = {
   name: string;
@@ -50,48 +49,48 @@ type ConsumerRow = {
 const getStatusStyles = (status: string) => {
   if (status?.toLowerCase() === "history") {
     return {
-      bg: "bg-[#e4e7ec]",       
-      border: "border-[#98a2b3]", 
+      bg: "bg-[#e4e7ec]",
+      border: "border-[#98a2b3]",
       text: "text-[#667085]",
     };
   }
 
   return {
-    bg: "bg-[#ecfdf3]",        
+    bg: "bg-[#ecfdf3]",
     border: "border-[#039855]",
     text: "text-[#039855]",
   };
 };
-
-
 
 export const parametersColumns: Column<ParameterRow>[] = [
   { key: "name", label: "Name", visible: true },
   { key: "value", label: "Value", visible: true },
   { key: "startDate", label: "Start Date", visible: true },
   { key: "endDate", label: "End Date", visible: true },
-  { key: "status", label: "Status", visible: true,
-  transformer: (value: any) => {
-  const statusValue = value || "-";
-  const colors = getStatusStyles(statusValue);
-  return {
-    type: "single-chip",
-    value: statusValue,
-    jsx: (
-      <div className="flex items-center ">
-        <span
-          className={`px-3 py-1 rounded-full text-sm border ${colors.bg} ${colors.border} ${colors.text}`}
-        >
-          {statusValue}
-        </span>
-      </div>
-    ),
-  };
-},
-
+  {
+    key: "status",
+    label: "Status",
+    visible: true,
+    transformer: (value: any) => {
+      const statusValue = value || "-";
+      const colors = getStatusStyles(statusValue);
+      return {
+        type: "single-chip",
+        value: statusValue,
+        jsx: (
+          <div className="flex items-center ">
+            <span
+              className={`px-3 py-1 rounded-full text-sm border ${colors.bg} ${colors.border} ${colors.text}`}
+            >
+              {statusValue}
+            </span>
+          </div>
+        ),
+      };
     },
+  },
   { key: "uploadedBy", label: "Uploaded By", visible: true },
-  { key: "reason", label: "Reason", visible: true }
+  { key: "reason", label: "Reason", visible: true },
 ];
 
 export const groupsColumns: Column<GroupRow>[] = [
@@ -99,27 +98,30 @@ export const groupsColumns: Column<GroupRow>[] = [
   { key: "groupName", label: "Group Name", visible: true },
   { key: "type", label: "Type", visible: true },
   { key: "subtype", label: "Subtype", visible: true },
-  { key: "status", label: "Status", visible: true,
-      transformer: (value: any) => {
-  const statusValue = value || "-";
-  const colors = getStatusStyles(statusValue);
-  return {
-    type: "single-chip",
-    value: statusValue,
-    jsx: (
-      <div className="flex items-center ">
-        <span
-          className={`px-3 py-1 rounded-full text-sm border ${colors.bg} ${colors.border} ${colors.text}`}
-        >
-          {statusValue}
-        </span>
-      </div>
-    ),
-  };
-},
+  {
+    key: "status",
+    label: "Status",
+    visible: true,
+    transformer: (value: any) => {
+      const statusValue = value || "-";
+      const colors = getStatusStyles(statusValue);
+      return {
+        type: "single-chip",
+        value: statusValue,
+        jsx: (
+          <div className="flex items-center ">
+            <span
+              className={`px-3 py-1 rounded-full text-sm border ${colors.bg} ${colors.border} ${colors.text}`}
+            >
+              {statusValue}
+            </span>
+          </div>
+        ),
+      };
+    },
   },
   { key: "startDate", label: "Start Date", visible: true },
-  { key: "endDate", label: "End Date", visible: true }
+  { key: "endDate", label: "End Date", visible: true },
 ];
 
 export const linkedAccountsColumns: Column<LinkedAccountRow>[] = [
@@ -128,25 +130,28 @@ export const linkedAccountsColumns: Column<LinkedAccountRow>[] = [
   { key: "billingCycle", label: "Billing Cycle", visible: true },
   { key: "relationship", label: "Relationship", visible: true },
   { key: "effectivePeriod", label: "Effective Period", visible: true },
-  { key: "status", label: "Status", visible: true,
-      transformer: (value: any) => {
-  const statusValue = value || "-";
-  const colors = getStatusStyles(statusValue);
-  return {
-    type: "single-chip",
-    value: statusValue,
-    jsx: (
-      <div className="flex items-center ">
-        <span
-          className={`px-3 py-1 rounded-full text-sm border ${colors.bg} ${colors.border} ${colors.text}`}
-        >
-          {statusValue}
-        </span>
-      </div>
-    ),
-  };
-},
-  }
+  {
+    key: "status",
+    label: "Status",
+    visible: true,
+    transformer: (value: any) => {
+      const statusValue = value || "-";
+      const colors = getStatusStyles(statusValue);
+      return {
+        type: "single-chip",
+        value: statusValue,
+        jsx: (
+          <div className="flex items-center ">
+            <span
+              className={`px-3 py-1 rounded-full text-sm border ${colors.bg} ${colors.border} ${colors.text}`}
+            >
+              {statusValue}
+            </span>
+          </div>
+        ),
+      };
+    },
+  },
 ];
 
 export const consumersColumns: Column<ConsumerRow>[] = [
@@ -155,108 +160,87 @@ export const consumersColumns: Column<ConsumerRow>[] = [
   { key: "type", label: "Type", visible: true },
   { key: "startDate", label: "Start Date", visible: true },
   { key: "endDate", label: "End Date", visible: true },
-  { key: "status", label: "Status", visible: true,
-      transformer: (value: any) => {
-  const statusValue = value || "-";
-  const colors = getStatusStyles(statusValue);
-  return {
-    type: "single-chip",
-    value: statusValue,
-    jsx: (
-      <div className="flex items-center">
-        <span
-          className={`px-3 py-1 rounded-full text-sm border ${colors.bg} ${colors.border} ${colors.text}`}
-        >
-          {statusValue}
-        </span>
-      </div>
-    ),
-  };
-},
-   }
+  {
+    key: "status",
+    label: "Status",
+    visible: true,
+    transformer: (value: any) => {
+      const statusValue = value || "-";
+      const colors = getStatusStyles(statusValue);
+      return {
+        type: "single-chip",
+        value: statusValue,
+        jsx: (
+          <div className="flex items-center">
+            <span
+              className={`px-3 py-1 rounded-full text-sm border ${colors.bg} ${colors.border} ${colors.text}`}
+            >
+              {statusValue}
+            </span>
+          </div>
+        ),
+      };
+    },
+  },
 ];
-
 
 export default function DetailsTab() {
   return (
     <div className="space-y-6">
+      <DataTableContainer
+        data={mockParameters}
+        columns={parametersColumns}
+        headerTitle=" Parameters"
+        showSettingButton
+        page={1}
+        limit={50}
+        total={mockParameters.length}
+        totalPages={1}
+        onSearch={() => {}}
+        onPageChange={() => {}}
+        containerClassName="max-h-[80vh]"
+      />
 
-      <Section title="Parameters">
-        <DataTableContainer
-          data={mockParameters}
-          columns={parametersColumns}
-          headerTitle=" Parameters"
-          showSettingButton
-          page={1}
-          limit={50}
-          total={mockParameters.length}
-          totalPages={1}
-          onSearch={() => {}}
-          onPageChange={() => {}}
-          containerClassName="max-h-[80vh]"
-          
-        />
-      </Section>
+      <DataTableContainer
+        data={mockServicePointGroups}
+        columns={groupsColumns}
+        headerTitle=" Service Point Groups"
+        showSettingButton
+        page={1}
+        limit={50}
+        total={mockServicePointGroups.length}
+        totalPages={1}
+        onSearch={() => {}}
+        onPageChange={() => {}}
+      />
 
-      <Section title="Service Point Groups">
-        <DataTableContainer
-          data={mockServicePointGroups}
-          columns={groupsColumns}
-           headerTitle=" Service Point Groups"
-           showSettingButton
-          page={1}
-          limit={50}
-          total={mockServicePointGroups.length}
-          totalPages={1}
-          onSearch={() => {}}
-          onPageChange={() => {}}
-        />
-      </Section>
+      <DataTableContainer
+        data={mockLinkedAccounts}
+        columns={linkedAccountsColumns}
+        headerTitle="Linked Accounts"
+        showSettingButton
+        page={1}
+        limit={50}
+        total={mockLinkedAccounts.length}
+        totalPages={1}
+        onSearch={() => {}}
+        onPageChange={() => {}}
+      />
 
-      <Section title="Linked Accounts">
-        <DataTableContainer
-          data={mockLinkedAccounts}
-          columns={linkedAccountsColumns}
-          headerTitle="Linked Accounts"
-          showSettingButton
-          page={1}
-          limit={50}
-          total={mockLinkedAccounts.length}
-          totalPages={1}
-          onSearch={() => {}}
-          onPageChange={() => {}}
-        />
-      </Section>
-
-      <Section title="Consumers">
-        <DataTableContainer
-          data={mockConsumers}
-          columns={consumersColumns}
-         headerTitle="Consumers"
-         showSettingButton
-          page={1}
-          limit={50}
-          total={mockConsumers.length}
-          totalPages={1}
-          onSearch={() => {}}
-          onPageChange={() => {}}
-        />
-      </Section>
-
+      <DataTableContainer
+        data={mockConsumers}
+        columns={consumersColumns}
+        headerTitle="Consumers"
+        showSettingButton
+        page={1}
+        limit={50}
+        total={mockConsumers.length}
+        totalPages={1}
+        onSearch={() => {}}
+        onPageChange={() => {}}
+      />
     </div>
   );
 }
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="border bg-background rounded-md p-4 space-y-4">
-      {children}
-    </div>
-  );
-}
+

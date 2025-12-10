@@ -12,7 +12,7 @@ import SettingIcon from "@/assets/icons/settings.svg?react";
 const statusColor = (status: string) => {
   switch (status) {
     case "Open":
-      return "bg-[#f79009] border-orange-500";
+      return "bg-[#f79009] border-[#ffead5]";
     case "Done":
       return "bg-[#d1fadf] border-[#12b76a]";
     default:
@@ -26,7 +26,7 @@ export default function SummaryTab({ data }: { data: any }) {
       <div className="grid grid-cols-3 gap-4 bg-background border rounded-lg p-5">
         {/* ACCOUNT */}
         <div className="space-y-2 border-r ">
-          <h3 className="font-semibold">Account</h3>
+          <h3 className="font-medium">Account</h3>
           <div className="space-x-2">
             <span className="text-muted-foreground">Account Udccid</span>{" "}
             <span className="font-medium">{data.account.accountUdccid}</span>
@@ -43,7 +43,7 @@ export default function SummaryTab({ data }: { data: any }) {
 
         {/* CUSTOMER */}
         <div className="space-y-2  border-r">
-          <h3 className="font-semibold">Customer</h3>
+          <h3 className="font-medium">Customer</h3>
           <div className="space-x-2">
             <span className="text-muted-foreground">Primary Contact</span>{" "}
             <span className="font-medium">{data.customer.primaryContact}</span>
@@ -56,7 +56,7 @@ export default function SummaryTab({ data }: { data: any }) {
 
         {/* METER STATUS */}
         <div className="space-y-2">
-          <h3 className="font-semibold">Meter Status</h3>
+          <h3 className="font-medium">Meter Status</h3>
           <div className="space-x-2">
             <span className="text-muted-foreground">Net CTPT Multiplier</span>{" "}
             <span className="font-medium">
