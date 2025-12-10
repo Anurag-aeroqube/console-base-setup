@@ -13,7 +13,7 @@ export function checkPermission(user: User | null, permission: PermissionString)
   }
 
   // Wildcard permission check (e.g., "users:*" grants all user permissions)
-  const [resource, action] = permission.split(':');
+  const [resource, _] = permission.split(':');
   const wildcardPermission = `${resource}:*`;
   if (user.permissions.includes(wildcardPermission)) {
     return true;

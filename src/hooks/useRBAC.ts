@@ -1,5 +1,5 @@
 import { useRBAC as useRBACContext } from '@/contexts/RBACContext';
-import { PermissionString, Role } from '@/types/rbac';
+import type { PermissionString, Role } from '@/types/rbac';
 
 export function useRBAC() {
   return useRBACContext();

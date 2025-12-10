@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { PaginationParams } from '@/types/data-management';
+import type { PaginationParams } from '@/types/data-management';
 
 export function usePagination(initialLimit = 10) {
   const [pagination, setPagination] = useState<PaginationParams>({

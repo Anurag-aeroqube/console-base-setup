@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSidebar } from "@/components/ui/sidebar";
+// import { useSidebar } from "@/components/ui/sidebar";
 import ThemeButton from "@/components/buttons/IconButton";
 import LanguageSwitcher from "@/components/buttons/IconAndLabelButton";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -20,7 +20,7 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { NAV } = LOCALIZATION_KEYS;
+  // const { NAV } = LOCALIZATION_KEYS;
 
   const currentPath =
     location.pathname.split("/")[2]?.toLowerCase() ??
