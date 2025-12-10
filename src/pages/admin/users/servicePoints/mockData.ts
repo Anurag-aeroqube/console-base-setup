@@ -1,5 +1,6 @@
 // SummaryTab/mockData.ts
 import type { Column } from "@/components/dataManagement/dataTable/DataTableView";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
 
 export const mockSummaryTables = {
   activeChannels: [
@@ -26,38 +27,42 @@ export const mockSummaryTables = {
 };
 
 export const channelsColumns: Column<any>[] = [
-  { key: "measurement", label: "Measurement", visible: true },
-  { key: "type", label: "Type", visible: true },
-  { key: "lastRead", label: "Last Read Date", visible: true },
-  { key: "value", label: "Value", visible: true },
-  { key: "status", label: "Validation Status", visible: true },
+  { key: "measurement", label: LOCALIZATION_KEYS.SUMMARY_COLS.MEASUREMENT, visible: true },
+  { key: "type", label: LOCALIZATION_KEYS.SUMMARY_COLS.TYPE, visible: true },
+  { key: "lastRead", label: LOCALIZATION_KEYS.SUMMARY_COLS.LAST_READ, visible: true },
+  { key: "value", label: LOCALIZATION_KEYS.SUMMARY_COLS.VALUE, visible: true },
+  { key: "status", label: LOCALIZATION_KEYS.SUMMARY_COLS.STATUS, visible: true },
 ];
+
 
 export const billingColumns: Column<any>[] = [
-  { key: "ref", label: "Ref", visible: true },
-  { key: "from", label: "From", visible: true },
-  { key: "to", label: "To", visible: true },
-  { key: "cycle", label: "Cycle", visible: true },
-  { key: "status", label: "Status", visible: true },
-  { key: "error", label: "Error Code", visible: true },
+  { key: "ref", label: LOCALIZATION_KEYS.SUMMARY_COLS.REF, visible: true },
+  { key: "from", label: LOCALIZATION_KEYS.SUMMARY_COLS.FROM, visible: true },
+  { key: "to", label: LOCALIZATION_KEYS.SUMMARY_COLS.TO, visible: true },
+  { key: "cycle", label: LOCALIZATION_KEYS.SUMMARY_COLS.CYCLE, visible: true },
+  { key: "status", label: LOCALIZATION_KEYS.SUMMARY_COLS.STATUS, visible: true },
+  { key: "error", label: LOCALIZATION_KEYS.SUMMARY_COLS.ERROR, visible: true },
 ];
+
 
 export const servicesColumns: Column<any>[] = [
-  { key: "ref", label: "Ref", visible: true },
-  { key: "name", label: "Name", visible: true },
-  { key: "type", label: "Data Service Type", visible: true },
-  { key: "start", label: "Service Start Date", visible: true },
-  { key: "end", label: "Service End Date", visible: true },
+  { key: "ref", label: LOCALIZATION_KEYS.SUMMARY_COLS.REF, visible: true },
+  { key: "name", label: LOCALIZATION_KEYS.SUMMARY_COLS.NAME, visible: true },
+  { key: "type", label: LOCALIZATION_KEYS.SUMMARY_COLS.TYPE, visible: true },
+  { key: "start", label: LOCALIZATION_KEYS.SUMMARY_COLS.START, visible: true },
+  { key: "end", label: LOCALIZATION_KEYS.SUMMARY_COLS.END, visible: true },
 ];
 
+
 export const eventsColumns: Column<any>[] = [
-  { key: "ref", label: "Ref", visible: true },
-  { key: "event", label: "Event Name", visible: true },
-  { key: "time", label: "Event Time", visible: true },
-  { key: "severity", label: "Severity", visible: true },
-  { key: "source", label: "Source", visible: true },
-  { key: "status", label: "Status", visible: true },
+  { key: "ref", label: LOCALIZATION_KEYS.SUMMARY_COLS.REF, visible: true },
+  { key: "event", label: LOCALIZATION_KEYS.SUMMARY_COLS.EVENT, visible: true },
+  { key: "time", label: LOCALIZATION_KEYS.SUMMARY_COLS.TIME, visible: true },
+  { key: "severity", label: LOCALIZATION_KEYS.SUMMARY_COLS.SEVERITY, visible: true },
+  { key: "source", label: LOCALIZATION_KEYS.SUMMARY_COLS.SOURCE, visible: true },
+  { key: "status", label: LOCALIZATION_KEYS.SUMMARY_COLS.STATUS, visible: true },
 ];
+
 
 export const mockServiceRequests = [
   {
@@ -85,10 +90,9 @@ export const mockServiceRequests = [
     id: "#1578435"
   }
 ];
-
 export const mockTabs = [
-  { key: "summary", label: "Summary" },
-  { key: "details", label: "Details" },
+  { key: "summary", label: LOCALIZATION_KEYS.TABS.SUMMARY },
+  { key: "details", label: LOCALIZATION_KEYS.TABS.DETAILS },
 ];
 
 

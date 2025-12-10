@@ -5,6 +5,7 @@ import SummaryTab from "./summaryTab/SummaryTabContainer";
 import DetailsTab from "./detailsTab/DetailsTabContainer";
 
 import { mockTabs } from "../mockData";
+import { useTranslation } from "react-i18next";
 
 const mockServicePoint = {
   servicePointId: "SDP-10053",
@@ -31,7 +32,7 @@ const mockServicePoint = {
 export default function ServicePointDetails() {
   // DEFAULT ACTIVE TAB → FIRST TAB IN MOCK
   const [activeTab, setActiveTab] = useState<string>(mockTabs[0].key);
-
+   const { t } = useTranslation();
   const data = mockServicePoint;
 
   return (
@@ -48,7 +49,7 @@ export default function ServicePointDetails() {
       </div>
 
       {/* TABS */}
-      <div className="inline-flex rounded-sm border overflow-hidden">
+      <div className="inline-flex  border overflow-hidden">
         {mockTabs.map((tab) => (
           <Button
             key={tab.key}
@@ -64,7 +65,8 @@ export default function ServicePointDetails() {
         }
       `}
           >
-            {tab.label}
+           {t(tab.label)}
+
           </Button>
         ))}
       </div>

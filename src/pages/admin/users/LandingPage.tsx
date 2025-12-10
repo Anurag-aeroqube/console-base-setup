@@ -91,6 +91,10 @@ export default function LandingPage() {
         <div className="bg-accent py-4 xl:h-[75vh] 2xl:h-[86vh]">
         <TableLayout
         columns={columns}
+        headerTitle={LOCALIZATION_KEYS.NAV.DASHBOARD}
+        showSettingButton
+        showAddButton
+        showDownloadButton
         fetchData={fetchLeads}
         className="max-h-[60vh] 2xl:max-h-[75vh]"
         externalSearch={searchQuery}
