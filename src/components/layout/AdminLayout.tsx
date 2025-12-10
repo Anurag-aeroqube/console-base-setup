@@ -1,39 +1,27 @@
-import { Outlet } from 'react-router-dom';
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
-import SideNavContainer from '@/components/layout/sidenav/SideNavContainer';
-import AppBar from './AppBar';
-import FiltersBar from './FiltersBar';
-
-import PaginationFooter from './PaginationFooter';
+import { Outlet } from "react-router-dom";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import SideNavContainer from "@/components/layout/sidenav/SideNavContainer";
+import AppBar from "./AppBar";
 
 export default function AdminLayout() {
   return (
-    <SidebarProvider>
-      <div className="flex w-full h-screen">
-        <SideNavContainer  />
-        
-        {/* Right Main Content Area */}
-        <SidebarInset className="flex flex-col flex-1 overflow-hidden">
-          {/* App Bar */}
+    <SidebarProvider
+  style={
+    {
+      "--sidebar-width": "240px",
+    
+    } as React.CSSProperties
+  }
+  >
+      <div className="flex w-full h-screen">    
+       <SideNavContainer />
+        <SidebarInset className=" flex flex-col overflow-hidden">
           <AppBar />
-          
-          {/* Filters And Other Actions */}
-          {/* <FiltersBar /> */}
-          
-          {/* List View - Main Content */}
-          {/* <div className="flex-1 overflow-auto">
-            <ListView />
-          </div> */}
-
           <div className="flex-1 overflow-auto">
-            <Outlet /> 
+            <Outlet />
           </div>
-          
-          {/* Footer - Pagination */}
-          {/* <PaginationFooter /> */}
         </SidebarInset>
       </div>
     </SidebarProvider>
   );
 }
-

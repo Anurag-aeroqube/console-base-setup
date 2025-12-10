@@ -6,6 +6,7 @@ const HindiTranslations = {
     [LOCALIZATION_KEYS.NAV.DASHBOARD]: "डैशबोर्ड",
     [LOCALIZATION_KEYS.NAV.USERS]: "उपयोगकर्ता",
     [LOCALIZATION_KEYS.NAV.MANAGE_USERS]: "उपयोगकर्ताओं का प्रबंधन",
+    [LOCALIZATION_KEYS.NAV.SERVICE_POINTS]: "सेवा बिंदु",
     [LOCALIZATION_KEYS.NAV.ROLES]: "भूमिकाएँ",
 
     // BUTTONS

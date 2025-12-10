@@ -6,6 +6,7 @@ export default {
     [LOCALIZATION_KEYS.NAV.DASHBOARD]: "Dashboard",
     [LOCALIZATION_KEYS.NAV.USERS]: "Users",
     [LOCALIZATION_KEYS.NAV.MANAGE_USERS]: "Manage Users",
+     [LOCALIZATION_KEYS.NAV.SERVICE_POINTS]: "Service Points",
     [LOCALIZATION_KEYS.NAV.ROLES]: "Roles",
 
     // BUTTONS

@@ -3,15 +3,21 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
 import SearchInput from "@/components/inputs/SearchInputs";
 import { LOCALIZATION_KEYS } from "@/i18n/keys";
+import SettingIcon from "@/assets/icons/settings.svg?react";
 import AddIcon from "@/assets/icons/add.svg?react";
 import DownloadIcon from "@/assets/icons/download.svg?react";
+import type { JSX } from "react";
 
 export type Column<T> = {
   key: keyof T;
   label: string;
   visible: boolean;
   width?: number;
-  transformer?: (value: any) => string;
+  transformer?: (value: any) => {
+    type: "string" | "single-chip" | "multi-chip";
+    value: string;
+    jsx?: JSX.Element;
+  };
 };
 
 type Props<T> = {
@@ -23,12 +29,27 @@ type Props<T> = {
   menuRef: React.RefObject<HTMLDivElement | null>;
   buttonRef: React.RefObject<HTMLButtonElement | null>;
   rowHeights: { [key: number]: number };
+  onRowClick?: (item: T, index: number) => void;
   onToggleBtn: () => void;
   onColumnSearchChange: (value: string) => void;
   onToggleColumn: (key: keyof T) => void;
   onColumnMouseDown: (e: React.MouseEvent, key: keyof T, width: number) => void;
   onRowMouseDown: (e: React.MouseEvent, index: number, height: number) => void;
   containerClassName?: string;
+  getCellContent: (
+    col: Column<T>,
+    item: T
+  ) => {
+    tranformedCellJsx: () => JSX.Element;
+    transformedCellTitle: string;
+  };
+  headerTitle?: string;
+  showSettingButton?:boolean;
+  showAddButton?: boolean;
+  showDownloadButton?: boolean;
+  onAddClick?: () => void;
+  onDownloadClick?: () => void;
+  onSettingClick?:()=> void;
 };
 
 export default function DataTableView<T extends { [key: string]: any }>({
@@ -40,26 +61,52 @@ export default function DataTableView<T extends { [key: string]: any }>({
   menuRef,
   buttonRef,
   rowHeights,
+  onRowClick,
   onToggleBtn,
   onColumnSearchChange,
   onToggleColumn,
   onColumnMouseDown,
   onRowMouseDown,
   containerClassName = "",
+  getCellContent,
+  headerTitle,
+  showSettingButton,
+  showAddButton,
+  showDownloadButton,
+  onAddClick,
+  onDownloadClick,
+  onSettingClick
 }: Props<T>) {
   const { t } = useTranslation();
 
   return (
     <div
       className={`flex flex-col border rounded-md
-      ${containerClassName ? containerClassName : "xl:max-h-[78vh] 2xl:max-h-[80vh] 2xl:min-h-[10vh]"}`}
+      ${
+        containerClassName
+          ? containerClassName
+          : "xl:max-h-[78vh] 2xl:max-h-[90vh] 2xl:min-h-[10vh]"
+      }`}
     >
       {/* Header */}
       <div className="flex items-center justify-between w-full py-2 px-2 bg-background">
         <div className="flex gap-3 justify-center items-center">
-          <p className="font-semibold text-lg">Anurag</p>
-          <AddIcon className="w-6 h-6 text-background" />
-          <DownloadIcon className="w-6 h-6 text-red-500" />
+          <p className="font-semibold text-lg">{headerTitle ?? ""}</p>
+
+              {showSettingButton && (
+            <SettingIcon className="w-6 h-6 cursor-pointer" onClick={onSettingClick} />
+          )}
+
+          {showAddButton && (
+            <AddIcon className="w-6 h-6 cursor-pointer" onClick={onAddClick} />
+          )}
+
+          {showDownloadButton && (
+            <DownloadIcon
+              className="w-6 h-6 cursor-pointer"
+              onClick={onDownloadClick}
+            />
+          )}
         </div>
 
         <div className="relative">
@@ -96,7 +143,9 @@ export default function DataTableView<T extends { [key: string]: any }>({
               ).length > 0 ? (
                 visibleCols
                   .filter((col) =>
-                    t(col.label).toLowerCase().includes(columnSearch.toLowerCase())
+                    t(col.label)
+                      .toLowerCase()
+                      .includes(columnSearch.toLowerCase())
                   )
                   .map((col) => (
                     <label
@@ -148,7 +197,9 @@ export default function DataTableView<T extends { [key: string]: any }>({
                       <span className="truncate block">{t(col.label)}</span>
                       <div
                         className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary hover:w-1.5 transition-all flex-shrink-0"
-                        onMouseDown={(e) => onColumnMouseDown(e, col.key, col.width)}
+                        onMouseDown={(e) =>
+                          onColumnMouseDown(e, col.key, col.width)
+                        }
                       />
                     </div>
                   </th>
@@ -160,46 +211,91 @@ export default function DataTableView<T extends { [key: string]: any }>({
               data.map((item, index) => (
                 <tr
                   key={index}
-                  className="relative"
+                  className="relative cursor-pointer hover:bg-primary/10"
+                  onClick={() => onRowClick?.(item, index)}
                   style={{
-                    height: rowHeights[index] ? `${rowHeights[index]}px` : "auto",
+                    height: rowHeights[index]
+                      ? `${rowHeights[index]}px`
+                      : "auto",
                   }}
                 >
                   {visibleCols
                     .filter((col) => col.visible)
-                    .map((col) => (
-                      <td
-                        key={String(col.key)}
-                        className="p-3 border-r last:border-r-0 relative"
-                        style={{
-                          width: `${col.width}px`,
-                          maxWidth: `${col.width}px`,
-                          minWidth: `${col.width}px`,
-                          height: rowHeights[index] ? `${rowHeights[index]}px` : "auto",
-                          verticalAlign: "top",
-                        }}
-                        title={
-                          col.transformer
-                            ? col.transformer(item[col.key])
-                            : item[col.key] || "-"
-                        }
-                      >
-                        <div className="overflow-hidden text-ellipsis whitespace-nowrap block">
-                          {col.transformer
-                            ? col.transformer(item[col.key])
-                            : item[col.key] || "-"}
-                        </div>
-                        {/* Row resize handle */}
-                        {col === visibleCols.filter((c) => c.visible)[0] && (
-                          <div
-                            className="absolute bottom-0 left-0 right-0 h-1 cursor-row-resize hover:bg-primary hover:h-1.5 transition-all z-10"
-                            onMouseDown={(e) =>
-                              onRowMouseDown(e, index, rowHeights[index] || 40)
-                            }
-                          />
-                        )}
-                      </td>
-                    ))}
+                    .map((col) => {
+                      // let transformedCellTitle: string =
+                      //   (item[col.key] as string) || "-";
+                      // let tranformedCellJsx = () => {
+                      //   return (
+                      //     <div className="overflow-hidden text-ellipsis whitespace-nowrap block">
+                      //       {item[col.key] || "-"}
+                      //     </div>
+                      //   );
+                      // };
+                      // if (col.transformer) {
+                      //   const transformedValue = col.transformer(item[col.key]);
+                      //   switch (transformedValue.type) {
+                      //     case "string":
+                      //       transformedCellTitle =
+                      //         transformedValue.value as string;
+                      //       tranformedCellJsx = () => {
+                      //         return (
+                      //           <div className="overflow-hidden text-ellipsis whitespace-nowrap block">
+                      //             {transformedValue.value as string}
+                      //           </div>
+                      //         );
+                      //       };
+                      //       break;
+
+                      //     default: {
+                      //       if (transformedValue.jsx) {
+                      //         transformedCellTitle = transformedValue.value as string;
+                      //         tranformedCellJsx = () =>
+                      //           transformedValue.jsx || (
+                      //             <div className="overflow-hidden text-ellipsis whitespace-nowrap block">
+                      //               {transformedValue.value as string}
+                      //             </div>
+                      //           );
+                      //         transformedCellTitle =
+                      //           transformedValue.value as string;
+                      //       }
+                      //     }
+                      //   }
+                      // }
+
+                      const { tranformedCellJsx, transformedCellTitle } =
+                        getCellContent(col, item);
+                      return (
+                        <td
+                          key={String(col.key)}
+                          className="p-3 border-r last:border-r-0 relative"
+                          style={{
+                            width: `${col.width}px`,
+                            maxWidth: `${col.width}px`,
+                            minWidth: `${col.width}px`,
+                            height: rowHeights[index]
+                              ? `${rowHeights[index]}px`
+                              : "auto",
+                            verticalAlign: "top",
+                          }}
+                          title={transformedCellTitle}
+                        >
+                          {tranformedCellJsx()}
+                          {/* Row resize handle - only on first column */}
+                          {col === visibleCols.filter((c) => c.visible)[0] && (
+                            <div
+                              className="absolute bottom-0 left-0 right-0 h-1 cursor-row-resize hover:bg-primary hover:h-1.5 transition-all z-10"
+                              onMouseDown={(e) =>
+                                onRowMouseDown(
+                                  e,
+                                  index,
+                                  rowHeights[index] || 40
+                                )
+                              }
+                            />
+                          )}
+                        </td>
+                      );
+                    })}
                 </tr>
               ))
             ) : (

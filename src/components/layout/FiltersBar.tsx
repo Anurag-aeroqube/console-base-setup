@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 import { useRBAC } from '@/contexts/RBACContext';
 import { filterByPermission } from '@/lib/rbac';
 import type { FilterDefinition, ActionDefinition } from '@/types/data-management';
-import FilterPanel from '@/components/data-management/FilterPanel';
-import ActionBar from '@/components/data-management/ActionBar';
+import FilterPanel from '@/components/dataManagement/FilterPanel';
+import ActionBar from '@/components/dataManagement/ActionBar';
 
 interface FiltersBarProps {
   filters?: FilterDefinition[];

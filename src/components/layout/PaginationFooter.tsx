@@ -193,7 +193,7 @@ export default function PaginationFooter({
   // Type 3: Numbered Pagination (1, 2, 3, 4, 5 style)
   if (type === "numbered") {
     return (
-      <div className=" border-b border-x boder-y bg-background px-6 py-4 flex items-center justify-between">
+      <div className=" border-b border-x boder-y bg-background px-6 py-4 flex  items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">Items per page:</span>
           <Select

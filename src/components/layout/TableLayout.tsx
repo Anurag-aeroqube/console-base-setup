@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
 import PaginationFooter from "@/components/layout/PaginationFooter";
-import DataTableContainer from "../data-management/data-table/DataTableContainer";
-import type { Column } from "../data-management/data-table/DataTableView";
-
+import DataTableContainer from "../dataManagement/dataTable/DataTableContainer";
+import type { Column } from "../dataManagement/dataTable/DataTableView";
 
 type Props<T> = {
   columns: Column<T>[];
-  fetchData: (params: { page: number; limit: number; search: string }) => Promise<{
+  fetchData: (params: {
+    page: number;
+    limit: number;
+    search: string;
+  }) => Promise<{
     data: T[];
     total: number;
     totalPages: number;
   }>;
   className?: string;
-   externalSearch?: string;
+  externalSearch?: string;
+  onRowClick?: (item: T) => void;
+  headerTitle?: string;
+  showSettingButton?:boolean;
+  showAddButton?: boolean;
+  showDownloadButton?: boolean;
+  onAddClick?: () => void;
+  onDownloadClick?: () => void;
 };
 
 export default function TableLayout<T extends Record<string, any>>({
@@ -20,6 +30,13 @@ export default function TableLayout<T extends Record<string, any>>({
   fetchData,
   className,
   externalSearch = "",
+  onRowClick,
+  headerTitle,
+  showSettingButton,
+  showAddButton,
+  showDownloadButton,
+  onAddClick,
+  onDownloadClick,
 }: Props<T>) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -35,20 +52,21 @@ export default function TableLayout<T extends Record<string, any>>({
     setTotalPages(res.totalPages);
   };
 
-    useEffect(() => {
+  useEffect(() => {
+    setSearch(externalSearch);
     setPage(1);
   }, [externalSearch]);
 
   useEffect(() => {
     loadData();
-  }, [page, limit, fetchData]);
+  }, [page, limit, search, fetchData]);
 
   return (
     <div className="flex flex-col w-[98%] mx-auto h-full">
-     <DataTableContainer
+      <DataTableContainer
         data={data}
         columns={columns}
-        onSearch={() => {}} 
+        onSearch={() => {}}
         onPageChange={setPage}
         page={page}
         totalPages={totalPages}
@@ -56,15 +74,24 @@ export default function TableLayout<T extends Record<string, any>>({
         limit={limit}
         onLimitChange={setLimit}
         containerClassName={className}
+        onRowClick={(item) => onRowClick?.(item)}
+        headerTitle={headerTitle}
+        showSettingButton={showSettingButton}
+        showAddButton={showAddButton}
+        showDownloadButton={showDownloadButton}
+        onAddClick={onAddClick}
+        onDownloadClick={onDownloadClick}
       />
 
       {data.length > 0 && (
-      <PaginationFooter
-        pagination={{ page, limit, total }}
-        onPageChange={setPage}
-        onLimitChange={setLimit}
-        type="numbered"
-      />
+        <div className="sticky bottom-0 w-full bg-background border-t z-20">
+          <PaginationFooter
+            pagination={{ page, limit, total }}
+            onPageChange={setPage}
+            onLimitChange={setLimit}
+            type="numbered"
+          />
+        </div>
       )}
     </div>
   );

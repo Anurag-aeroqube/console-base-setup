@@ -21,6 +21,11 @@ const SideNavContainer = () => {
     {
       label: t(NAV.USERS),
       children: [
+          {
+          label: t(NAV.SERVICE_POINTS),
+          href: "/dashboard/service_points",
+          permission: "users:view" as PermissionString,
+        },
         {
           label: t(NAV.MANAGE_USERS),
           href: "/dashboard/users",
@@ -31,6 +36,7 @@ const SideNavContainer = () => {
           href: "/dashboard/roles",
           permission: "roles:view" as PermissionString,
         },
+        
       ],
     },
   ];
@@ -49,8 +55,6 @@ const SideNavContainer = () => {
     })
 .filter((item): item is NonNullable<typeof item> => item !== null)
 
-
- 
   return (
     <SideNavView location={location} navigate={navigate} navLinks={filteredNavLinks} />
   );

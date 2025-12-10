@@ -12,4 +12,5 @@ export interface Lead {
   sales_person?: string;
   phone?: string;
   anurag?: string;
+  lead ?: string
 }

@@ -10,6 +10,10 @@ const axiosInstance = axios.create({
   },
 });
 
+// this is a mock token and auth for demonstration purposes only
+// even if this to be used in production, make sure to handle tokens securely and fetch respctive
+// secrets manager class
+
 axiosInstance.interceptors.request.use((config) => {
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2OTJmZDQ2NTNhY2FjNzM5MjBmMWFkMDAiLCJ1c2VySWQiOiI2OGU0ZWZlYWQyMjQ0MmU3YTQ5NjNhNzciLCJsb2dpblRpbWUiOjE3NjQ3NDIyNDUwMDAsInRva2VuVHlwZSI6MSwiYXJuIjoiIiwiaWF0IjoxNzY0NzQyMjQ1fQ.tVwxhz7805JAetyUHEzAnMr--koT0wq1XyANX4yqn9g";
   const auth ="YnVpbGRNYXBwZXIxMjM0NS1jbGllbnQ6cGFzczEyMzQ1LWNsaWVudA=="

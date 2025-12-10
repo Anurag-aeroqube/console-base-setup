@@ -53,7 +53,7 @@ export default function SideNavView({
   };
  
   return (
-    <Sidebar className=" border-r  flex flex-col">
+    <Sidebar className=" border-r flex flex-col">
       {/* <div className=" flex items-center w-[70%] 2xl:h-[10vh] h-[16vh]  mx-auto ">
         <img src={logo} alt="logo" className="w-40" />
       </div> */}
@@ -140,7 +140,6 @@ export default function SideNavView({
           className="flex justify-center items-center gap-3 px-6 py-2  hover:bg-accent cursor-pointer"
         >
        {t(LOCALIZATION_KEYS.COMMON.LOGOUT)}
-
         </SidebarMenuButton>
       </SidebarFooter>
     </Sidebar>

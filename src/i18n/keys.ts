@@ -3,6 +3,7 @@ export const LOCALIZATION_KEYS = {
     DASHBOARD: "nav.dashboard",
     USERS: "nav.users",
     MANAGE_USERS: "nav.manageUsers",
+    SERVICE_POINTS:"nav.service_points",
     ROLES: "nav.roles"
   },
  
