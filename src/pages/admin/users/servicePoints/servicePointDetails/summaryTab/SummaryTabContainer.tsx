@@ -8,11 +8,13 @@ import {
   servicesColumns,
 } from "@/pages/admin/users/servicePoints/mockData";
 import SettingIcon from "@/assets/icons/settings.svg?react";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
+import { useTranslation } from "react-i18next";
 
 const statusColor = (status: string) => {
   switch (status) {
     case "Open":
-      return "bg-[#f79009] border-[#ffead5]";
+      return "bg-[#ffead5] border-[#f79009]";
     case "Done":
       return "bg-[#d1fadf] border-[#12b76a]";
     default:
@@ -21,57 +23,58 @@ const statusColor = (status: string) => {
 };
 
 export default function SummaryTab({ data }: { data: any }) {
+const { t } = useTranslation();
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-4 bg-background border rounded-lg p-5">
         {/* ACCOUNT */}
         <div className="space-y-2 border-r ">
-          <h3 className="font-medium">Account</h3>
+          <h3 className="font-medium">{t(LOCALIZATION_KEYS.SUMMARY_HEADERS.ACCOUNT)}</h3>
           <div className="space-x-2">
-            <span className="text-muted-foreground">Account Udccid</span>{" "}
+            <span className="text-muted-foreground"> {t(LOCALIZATION_KEYS.SUMMARY_FIELDS.ACCOUNT_UDCCID)}</span>{" "}
             <span className="font-medium">{data.account.accountUdccid}</span>
           </div>
           <div className="space-x-2">
-            <span className="text-muted-foreground">Account Start</span>{" "}
+            <span className="text-muted-foreground">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.ACCOUNT_START)}</span>{" "}
             <span className="font-medium">{data.account.accountStart}</span>
           </div>
           <div className="space-x-2">
-            <span className="text-muted-foreground">Billing Cycle</span>{" "}
+            <span className="text-muted-foreground">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.BILLING_CYCLE)}</span>{" "}
             <span className="font-medium">{data.account.billingCycle}</span>
           </div>
         </div>
 
         {/* CUSTOMER */}
         <div className="space-y-2  border-r">
-          <h3 className="font-medium">Customer</h3>
+          <h3 className="font-medium"> {t(LOCALIZATION_KEYS.SUMMARY_HEADERS.CUSTOMER)}</h3>
           <div className="space-x-2">
-            <span className="text-muted-foreground">Primary Contact</span>{" "}
+            <span className="text-muted-foreground">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.PRIMARY_CONTACT)}</span>{" "}
             <span className="font-medium">{data.customer.primaryContact}</span>
           </div>
           <div className="space-x-2">
-            <span className="text-muted-foreground">Premise/Address</span>{" "}
+            <span className="text-muted-foreground">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.ADDRESS)}</span>{" "}
             <span className="font-medium">{data.customer.address}</span>
           </div>
         </div>
 
         {/* METER STATUS */}
         <div className="space-y-2">
-          <h3 className="font-medium">Meter Status</h3>
+          <h3 className="font-medium">{t(LOCALIZATION_KEYS.SUMMARY_HEADERS.METER_STATUS)}</h3>
           <div className="space-x-2">
-            <span className="text-muted-foreground">Net CTPT Multiplier</span>{" "}
+            <span className="text-muted-foreground">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.CTPT_MULTIPLIER)}</span>{" "}
             <span className="font-medium">
               {" "}
               {data.meterStatus.ctptMultiplier}
             </span>
           </div>
           <div className="space-x-2">
-            <span className="text-muted-foreground">Power Connected</span>{" "}
+            <span className="text-muted-foreground">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.POWER_CONNECTED)}</span>{" "}
             <span className="font-medium">
               {data.meterStatus.powerConnected}
             </span>
           </div>
           <div className="space-x-2">
-            <span className="text-muted-foreground">Load Connected</span>{" "}
+            <span className="text-muted-foreground">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.LOAD_CONNECTED)}</span>{" "}
             <span className="font-medium">
               {data.meterStatus.loadConnected}
             </span>
@@ -81,7 +84,7 @@ export default function SummaryTab({ data }: { data: any }) {
       <div className="flex gap-4">
         <div className="w-1/4 bg-background border rounded-xl p-4 space-y-4">
           <div className="flex items-center gap-3">
-            <h2 className="font-semibold text-lg">Service Requests (547)</h2>
+            <h2 className="font-semibold text-lg">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.SERVICE_REQUESTS)} (547)</h2>
                <SettingIcon className="w-6 h-6 cursor-pointer" />
 
           </div>
@@ -123,7 +126,7 @@ export default function SummaryTab({ data }: { data: any }) {
           <DataTableContainer
             data={mockSummaryTables.activeChannels}
             columns={channelsColumns}
-            headerTitle="Active Channels (3)"
+            headerTitle={LOCALIZATION_KEYS.SUMMARY_HEADERS.ACTIVE_CHANNELS}
             showSettingButton
             onSearch={() => {}}
             onPageChange={() => {}}
@@ -136,7 +139,7 @@ export default function SummaryTab({ data }: { data: any }) {
           <DataTableContainer
             data={mockSummaryTables.billingRequests}
             columns={billingColumns}
-            headerTitle="Recent Billing Requests (2)"
+            headerTitle={LOCALIZATION_KEYS.SUMMARY_HEADERS.RECENT_BILLING_REQUESTS}
             showSettingButton
             onSearch={() => {}}
             onPageChange={() => {}}
@@ -149,8 +152,8 @@ export default function SummaryTab({ data }: { data: any }) {
           <DataTableContainer
             data={mockSummaryTables.activeDataServices}
             columns={servicesColumns}
-            headerTitle=" Active Data Services (6)"
-            showSettingButton
+             headerTitle={LOCALIZATION_KEYS.SUMMARY_HEADERS.ACTIVE_DATA_SERVICES}
+            showSettingButton      
             onSearch={() => {}}
             onPageChange={() => {}}
             page={1}
@@ -162,7 +165,7 @@ export default function SummaryTab({ data }: { data: any }) {
           <DataTableContainer
             data={mockSummaryTables.recentEvents}
             columns={eventsColumns}
-            headerTitle="Recent Events (2)"
+            headerTitle={LOCALIZATION_KEYS.SUMMARY_HEADERS.RECENT_EVENTS}
             showSettingButton
             onSearch={() => {}}
             onPageChange={() => {}}

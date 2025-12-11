@@ -5,6 +5,8 @@ import SummaryTab from "./summaryTab/SummaryTabContainer";
 import DetailsTab from "./detailsTab/DetailsTabContainer";
 
 import { mockTabs } from "../mockData";
+import { useTranslation } from "react-i18next";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
 
 const mockServicePoint = {
   servicePointId: "SDP-10053",
@@ -29,26 +31,34 @@ const mockServicePoint = {
 };
 
 export default function ServicePointDetails() {
-  // DEFAULT ACTIVE TAB → FIRST TAB IN MOCK
   const [activeTab, setActiveTab] = useState<string>(mockTabs[0].key);
-
+  const { t } = useTranslation();
   const data = mockServicePoint;
 
   return (
     <div className="p-4 space-y-4 bg-accent ">
       {/* HEADER */}
       <div className="flex justify-between items-center">
-        <h1 className="text-lg font-semibold">
-          Service Point {data.servicePointId}
-          <span className="ml-3">Meter {data.meterId}</span>
-          <span className="ml-3">{data.meterType}</span>
+        <h1 className="text-lg font-semibold gap-4 flex">
+          <div className="space-x-2">
+            <span>{t(LOCALIZATION_KEYS.NAV.SERVICE_POINTS)}</span>
+            <span>{data.servicePointId}</span>
+          </div>
+          <div className="space-x-2">
+            <span>{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.METER)}</span>
+            <span>{data.meterId}</span>
+          </div>
+          <span >
+            {" "}
+            {t(LOCALIZATION_KEYS.SUMMARY_FIELDS.ELECTRIC || data.meterType)}
+          </span>
         </h1>
 
         <Button className="border bg-primary text-background">Actions ▾</Button>
       </div>
 
       {/* TABS */}
-      <div className="inline-flex rounded-sm border overflow-hidden">
+      <div className="inline-flex  border overflow-hidden">
         {mockTabs.map((tab) => (
           <Button
             key={tab.key}
@@ -64,7 +74,7 @@ export default function ServicePointDetails() {
         }
       `}
           >
-            {tab.label}
+            {t(tab.label)}
           </Button>
         ))}
       </div>

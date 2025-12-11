@@ -126,7 +126,7 @@ export default function servicePointListingContainer() {
             showSettingButton
             showAddButton
             showDownloadButton
-            headerTitle="Service Points"
+             headerTitle={LOCALIZATION_KEYS.NAV.SERVICE_POINTS}
             className="max-h-[60vh] 2xl:max-h-[75vh]"
             externalSearch={searchQuery}
             onRowClick={() =>

@@ -1,5 +1,6 @@
 import DataTableContainer from "@/components/dataManagement/dataTable/DataTableContainer";
 import type { Column } from "@/components/dataManagement/dataTable/DataTableView";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
 
 import {
   mockParameters,
@@ -63,13 +64,13 @@ const getStatusStyles = (status: string) => {
 };
 
 export const parametersColumns: Column<ParameterRow>[] = [
-  { key: "name", label: "Name", visible: true },
-  { key: "value", label: "Value", visible: true },
-  { key: "startDate", label: "Start Date", visible: true },
-  { key: "endDate", label: "End Date", visible: true },
+  { key: "name", label: LOCALIZATION_KEYS.DETAILS_COLS.PARAMETERS.NAME, visible: true },
+  { key: "value", label: LOCALIZATION_KEYS.DETAILS_COLS.PARAMETERS.VALUE, visible: true },
+  { key: "startDate", label: LOCALIZATION_KEYS.DETAILS_COLS.PARAMETERS.START_DATE, visible: true },
+  { key: "endDate", label: LOCALIZATION_KEYS.DETAILS_COLS.PARAMETERS.END_DATE, visible: true },
   {
     key: "status",
-    label: "Status",
+    label: LOCALIZATION_KEYS.DETAILS_COLS.PARAMETERS.STATUS,
     visible: true,
     transformer: (value: any) => {
       const statusValue = value || "-";
@@ -89,18 +90,18 @@ export const parametersColumns: Column<ParameterRow>[] = [
       };
     },
   },
-  { key: "uploadedBy", label: "Uploaded By", visible: true },
-  { key: "reason", label: "Reason", visible: true },
+  { key: "uploadedBy", label: LOCALIZATION_KEYS.DETAILS_COLS.PARAMETERS.UPLOADED_BY, visible: true },
+  { key: "reason", label:LOCALIZATION_KEYS.DETAILS_COLS.PARAMETERS.REASON, visible: true },
 ];
 
 export const groupsColumns: Column<GroupRow>[] = [
-  { key: "udcid", label: "UCDID", visible: true },
-  { key: "groupName", label: "Group Name", visible: true },
-  { key: "type", label: "Type", visible: true },
-  { key: "subtype", label: "Subtype", visible: true },
+  { key: "udcid", label: LOCALIZATION_KEYS.DETAILS_COLS.SERVICE_GROUPS.UCDID, visible: true },
+  { key: "groupName", label: LOCALIZATION_KEYS.DETAILS_COLS.SERVICE_GROUPS.GROUP_NAME, visible: true },
+  { key: "type", label: LOCALIZATION_KEYS.DETAILS_COLS.SERVICE_GROUPS.TYPE, visible: true },
+  { key: "subtype", label:LOCALIZATION_KEYS.DETAILS_COLS.SERVICE_GROUPS.SUBTYPE, visible: true },
   {
     key: "status",
-    label: "Status",
+    label: LOCALIZATION_KEYS.DETAILS_COLS.SERVICE_GROUPS.STATUS,
     visible: true,
     transformer: (value: any) => {
       const statusValue = value || "-";
@@ -120,16 +121,16 @@ export const groupsColumns: Column<GroupRow>[] = [
       };
     },
   },
-  { key: "startDate", label: "Start Date", visible: true },
-  { key: "endDate", label: "End Date", visible: true },
+  { key: "startDate", label:LOCALIZATION_KEYS.DETAILS_COLS.SERVICE_GROUPS.START_DATE, visible: true },
+  { key: "endDate", label:LOCALIZATION_KEYS.DETAILS_COLS.SERVICE_GROUPS.END_DATE, visible: true },
 ];
 
 export const linkedAccountsColumns: Column<LinkedAccountRow>[] = [
-  { key: "accountId", label: "Account ID", visible: true },
-  { key: "rateSchedule", label: "Rate Schedule", visible: true },
-  { key: "billingCycle", label: "Billing Cycle", visible: true },
-  { key: "relationship", label: "Relationship", visible: true },
-  { key: "effectivePeriod", label: "Effective Period", visible: true },
+  { key: "accountId", label: LOCALIZATION_KEYS.DETAILS_COLS.LINKED_ACCOUNTS.ACCOUNT_ID, visible: true },
+  { key: "rateSchedule", label: LOCALIZATION_KEYS.DETAILS_COLS.LINKED_ACCOUNTS.RATE_SCHEDULE, visible: true },
+  { key: "billingCycle", label:  LOCALIZATION_KEYS.DETAILS_COLS.LINKED_ACCOUNTS.BILLING_CYCLE, visible: true },
+  { key: "relationship", label:  LOCALIZATION_KEYS.DETAILS_COLS.LINKED_ACCOUNTS.RELATIONSHIP, visible: true },
+  { key: "effectivePeriod", label:  LOCALIZATION_KEYS.DETAILS_COLS.LINKED_ACCOUNTS.EFFECTIVE_PERIOD, visible: true },
   {
     key: "status",
     label: "Status",
@@ -155,14 +156,14 @@ export const linkedAccountsColumns: Column<LinkedAccountRow>[] = [
 ];
 
 export const consumersColumns: Column<ConsumerRow>[] = [
-  { key: "name", label: "Consumer Name", visible: true },
-  { key: "account", label: "Account", visible: true },
-  { key: "type", label: "Type", visible: true },
-  { key: "startDate", label: "Start Date", visible: true },
-  { key: "endDate", label: "End Date", visible: true },
+  { key: "name", label: LOCALIZATION_KEYS.DETAILS_COLS.CONSUMERS.NAME, visible: true },
+  { key: "account", label:LOCALIZATION_KEYS.DETAILS_COLS.CONSUMERS.ACCOUNT, visible: true },
+  { key: "type", label:LOCALIZATION_KEYS.DETAILS_COLS.CONSUMERS.TYPE, visible: true },
+  { key: "startDate", label:LOCALIZATION_KEYS.DETAILS_COLS.CONSUMERS.START_DATE, visible: true },
+  { key: "endDate", label:LOCALIZATION_KEYS.DETAILS_COLS.CONSUMERS.END_DATE, visible: true },
   {
     key: "status",
-    label: "Status",
+    label:LOCALIZATION_KEYS.DETAILS_COLS.CONSUMERS.STATUS,
     visible: true,
     transformer: (value: any) => {
       const statusValue = value || "-";
@@ -190,7 +191,7 @@ export default function DetailsTab() {
       <DataTableContainer
         data={mockParameters}
         columns={parametersColumns}
-        headerTitle=" Parameters"
+        headerTitle={LOCALIZATION_KEYS.SUMMARY_HEADERS.PARAMETERS}
         showSettingButton
         page={1}
         limit={50}
@@ -204,7 +205,7 @@ export default function DetailsTab() {
       <DataTableContainer
         data={mockServicePointGroups}
         columns={groupsColumns}
-        headerTitle=" Service Point Groups"
+        headerTitle={LOCALIZATION_KEYS.SUMMARY_HEADERS.SERVICE_POINT_GROUPS}
         showSettingButton
         page={1}
         limit={50}
@@ -217,7 +218,7 @@ export default function DetailsTab() {
       <DataTableContainer
         data={mockLinkedAccounts}
         columns={linkedAccountsColumns}
-        headerTitle="Linked Accounts"
+        headerTitle={LOCALIZATION_KEYS.SUMMARY_HEADERS.LINKED_ACCOUNTS}
         showSettingButton
         page={1}
         limit={50}
@@ -230,7 +231,7 @@ export default function DetailsTab() {
       <DataTableContainer
         data={mockConsumers}
         columns={consumersColumns}
-        headerTitle="Consumers"
+        headerTitle={LOCALIZATION_KEYS.SUMMARY_HEADERS.CONSUMERS}
         showSettingButton
         page={1}
         limit={50}

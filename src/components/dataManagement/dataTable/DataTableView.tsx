@@ -91,8 +91,7 @@ export default function DataTableView<T extends { [key: string]: any }>({
       {/* Header */}
       <div className="flex items-center justify-between w-full py-2 px-2 bg-background">
         <div className="flex gap-3 justify-center px-1 items-center">
-          <p className="font-semibold text-lg">{headerTitle ?? ""}</p>
-
+         <p className="font-semibold text-lg">{headerTitle ? t(headerTitle) : ""}</p>
               {showSettingButton && (
             <SettingIcon className="w-6 h-6 cursor-pointer" onClick={onSettingClick} />
           )}
