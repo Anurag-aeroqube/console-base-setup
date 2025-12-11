@@ -20,7 +20,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src")
     }
   },
-  // @ts-expect-error Fix this later
   test: {
     projects: [{
       extends: true,
