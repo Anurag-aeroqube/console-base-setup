@@ -54,7 +54,9 @@ SUMMARY_FIELDS: {
   CTPT_MULTIPLIER: "summary.fields.ctpt_multiplier",
   POWER_CONNECTED: "summary.fields.power_connected",
   LOAD_CONNECTED: "summary.fields.load_connected",
-    SERVICE_REQUESTS: "summary.fields.service_requests",
+  SERVICE_REQUESTS: "summary.fields.service_requests",
+  METER: "summary.fields.meter",
+  ELECTRIC: "summary.fields.electric",
 },
  
   COMMON: {

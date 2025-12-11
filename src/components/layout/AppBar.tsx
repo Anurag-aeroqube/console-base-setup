@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ThemeButton from "@/components/buttons/IconButton";
 import LanguageSwitcher from "@/components/buttons/IconAndLabelButton";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { LOCALIZATION_KEYS } from "@/i18n/keys";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,22 +21,39 @@ export default function Header() {
   const { t } = useTranslation();
   // const { NAV } = LOCALIZATION_KEYS;
 
-  const segments = location.pathname.split("/").filter(Boolean);
+function getPageTitle(pathname: string, t: any): string {
+  const segments = pathname.split("/").filter(Boolean);
 
-  // Always use raw URL parts (not translated text)
-  const parentRaw = segments[1]?.toLowerCase() ?? "";
-  const childRaw = segments[2]?.toLowerCase() ?? "";
+  // Special cases
+  const specialMap: Record<string, string> = {
+    "/dashboard": t("nav.dashboard"), // example for headerName on the basis of url
+  };
 
-  // Use translated label for showing, but raw key for lookup
-  const parentTitle = t(`nav.${parentRaw}`) || parentRaw.replace(/-/g, " ");
-  const childTitle = childRaw
-    ? t(`nav.${childRaw}`) || childRaw.replace(/-/g, " ")
-    : "";
+  if (specialMap[pathname]) return specialMap[pathname];
 
-  // Final title: Service Points Details
-  const displayTitle = childTitle
-    ? `${parentTitle} ${childTitle}`
-    : parentTitle;
+  // Generic page title formatting
+  // ignore segment[0] = dashboard
+  const parent = segments[1] || "";
+  const child = segments[2] || "";
+
+  const format = (txt: string) =>
+    txt
+      .replace(/-|_/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+
+  const translateOrFormat = (key: string) =>
+    t(`nav.${key}`, { defaultValue: format(key) });
+
+  if (parent && child) return `${translateOrFormat(parent)} ${translateOrFormat(child)}`;
+  if (parent) return translateOrFormat(parent);
+
+  return t("nav.dashboard", { defaultValue: "Dashboard" });
+}
+
+
+const displayTitle = getPageTitle(location.pathname, t);
+
+
 
   const userData = user || {
     fullName: "Apparent",
