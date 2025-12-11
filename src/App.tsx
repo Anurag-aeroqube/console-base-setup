@@ -1,18 +1,38 @@
 import { Outlet } from "react-router-dom";
+import { RBACProvider } from "@/contexts/RBACContext";
 import AutoTranslateProvider from "./contexts/AutoTranslateProvider";
-
 import { ThemeProvider } from "./contexts/ThemeProvider";
+import { LoadingProvider } from "./contexts/LoadingContext";
+import { Loader } from "./components/Loader";
 
+const mockUser = {
+  id: "1",
+  email: "anurag@example.com",
+  fullName: "Anurag Dev",
+  avatar_url: "",
+  roles: ["admin"],
+  permissions: [
+    "dashboard:view",
+    "users:view",
+    "roles:view",
+  ],
+};
+ 
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <AutoTranslateProvider>
-        <div className="w-full ">
-          <Outlet />
-        </div>
+        <RBACProvider  user={mockUser} isLoading={false}>
+          <LoadingProvider>
+            <Loader />
+            <div className="w-full">
+              <Outlet />
+            </div>
+          </LoadingProvider>
+        </RBACProvider>
       </AutoTranslateProvider>
-    </ThemeProvider>
+     </ThemeProvider>
   );
 }
-
+ 
 export default App;

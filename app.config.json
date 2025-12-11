@@ -1,0 +1,12 @@
+{
+    "appName" : "Apparent",
+    "appDescription" : "Apparent is a platform for managing and analyzing data.",
+    "appVersion" : "1.0.0",
+    "appAuthor" : "Apparent",
+    "appAuthorEmail" : "info@apparent.com",
+    "appAuthorUrl" : "https://apparent.com",
+    "appAuthorLogo" : "https://apparent.com/logo.png",
+    "appAuthorLogoDark" : "https://apparent.com/logo-dark.png",
+    "appAuthorLogoLight" : "https://apparent.com/logo-light.png",
+    "appAuthorLogoWhite" : "https://apparent.com/logo-white.png"
+}
