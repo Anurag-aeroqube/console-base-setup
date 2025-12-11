@@ -1,10 +1,10 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
-// import { Suspense } from "react";
+import { Suspense } from "react";
  
 import App from "../App";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { Dashboard, ServicePointListing,ServicePointDetails} from "./lazyImport";
-// import Loading from "./loading";
+import { Loader } from "@/components/Loader";
 
       
 const router = createBrowserRouter(
@@ -15,17 +15,17 @@ const router = createBrowserRouter(
         <Route
           path="dashboard"
           element={
-            // <Suspense fallback={<Loading />}>
+            <Suspense fallback={<Loader />}>
               <AdminLayout />
-            // </Suspense>
+            </Suspense>
           }
         >
           <Route
             index
             element={
-              // <Suspense fallback={<Loading />}>
+              <Suspense fallback={<Loader />}>
                 <Dashboard />
-              // </Suspense>
+              </Suspense>
             }
           />
          
