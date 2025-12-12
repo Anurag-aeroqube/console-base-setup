@@ -23,7 +23,7 @@ export default function LanguageSwitcherButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="secondary" size="sm" className="flex items-center gap-2 cursor-pointer">
+        <Button variant="outline" size="sm" className="flex items-center gap-2 cursor-pointer">
           <IoLanguage className="h-5 w-5" />
           <span className="text-sm font-medium">
             {
@@ -34,7 +34,7 @@ export default function LanguageSwitcherButton() {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="">
+      <DropdownMenuContent align="end" className="bg-background">
         {LANGUAGES.map((lang) => (
           <DropdownMenuItem
             key={lang.code}

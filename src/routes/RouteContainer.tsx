@@ -29,10 +29,22 @@ const router = createBrowserRouter(
             }
           />
          
-            <Route path="service_points" element={<ServicePointListing />} />
-                <Route path="service_points/details" element={<ServicePointDetails />} />
+           
       
 
+        </Route>
+
+              <Route
+          path="users"
+          element={
+            <Suspense fallback={<Loader />}>
+              <AdminLayout />
+            </Suspense>
+          }
+        >
+
+           <Route path="service_points" element={<ServicePointListing />} />
+                <Route path="service_points/details" element={<ServicePointDetails />} />
         </Route>
  
       </Route>

@@ -70,6 +70,7 @@ export default function SideNavView({
                   <>
                     <SidebarMenuButton
                       onClick={() => toggle(item.label)}
+                       isActive={false}
                       className={cn(
                         "flex justify-between items-center px-6 py-2 w-[80%] mx-auto rounded-md font-medium text-base",
                         " cursor-pointer",
@@ -100,8 +101,8 @@ export default function SideNavView({
                               className={cn(
                                 "px-2 py-2 rounded text-sm flex gap-3 h-auto cursor-pointer  font-medium",
                                 activeChild
-                                  ? "bg-[#f9fafb]"
-                                  : "text-[#344054] "
+                                  ? ""
+                                  : " "
                               )}
                             >
                               {child.icon}
@@ -119,8 +120,8 @@ export default function SideNavView({
                     className={cn(
                       "flex items-center gap-3 px-6 py-2 rounded-md w-[80%] mx-auto cursor-pointer font-medium text-[15px]",
                       isActive
-                        ? "bg-[#f9fafb] text-[#101828]"
-                        : "text-gray-700 "
+                        ? " text-[#101828]"
+                        : " "
                     )}
                   >
                     {item.icon}

@@ -14,6 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
+import { useTranslation } from "react-i18next";
 
 type PaginationType = "simple" | "detailed" | "numbered";
 
@@ -36,6 +38,7 @@ export default function PaginationFooter({
   const totalPages = Math.ceil(total / limit);
   const startItem = (page - 1) * limit + 1;
   const endItem = Math.min(page * limit, total);
+  const { t } = useTranslation();
 
   // Generate page numbers for numbered pagination
   const getPageNumbers = () => {
@@ -117,7 +120,7 @@ export default function PaginationFooter({
     return (
       <div className="border-t bg-background px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Items per page:</span>
+          <span className="text-sm text-muted-foreground">Show result:</span>
 
           <Select
             value={String(limit)}
@@ -141,10 +144,6 @@ export default function PaginationFooter({
           </Select>
         </div>
 
-        {/* Page info */}
-        <div className="text-sm text-muted-foreground">
-          Showing {startItem} to {endItem} of {total} entries
-        </div>
 
         {/* Pagination controls */}
         <div className="flex items-center gap-2">
@@ -195,7 +194,7 @@ export default function PaginationFooter({
     return (
       <div className=" border-b border-x boder-y bg-background px-6 py-4 flex  items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Items per page:</span>
+          <span className="text-sm text-muted-foreground">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.SHOW_RESULT)} :</span>
           <Select
             value={String(limit)}
             onValueChange={(val) => onLimitChange(Number(val))}
@@ -218,10 +217,7 @@ export default function PaginationFooter({
           </Select>
         </div>
 
-        {/* Page info */}
-        <div className="text-sm text-muted-foreground">
-          Showing {startItem} to {endItem} of {total} entries
-        </div>
+
 
         <div className="flex items-center gap-1">
           <Button
