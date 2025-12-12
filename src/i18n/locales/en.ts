@@ -79,6 +79,16 @@ export default {
     [LOCALIZATION_KEYS.LANG.ENGLISH]: "English",
     [LOCALIZATION_KEYS.LANG.HINDI]: "Hindi",
 
+    //THEME
+    
+  [LOCALIZATION_KEYS.THEME.LIGHT]: "Light",
+  [LOCALIZATION_KEYS.THEME.DARK_1]: "Dark - 1",
+  [LOCALIZATION_KEYS.THEME.DARK_2]: "Dark - 2",
+  [LOCALIZATION_KEYS.THEME.DARK_3]: "Dark - 3",
+  [LOCALIZATION_KEYS.THEME.DARK_RECOMMENDED]: "Dark (Recommended)",
+
+
+
     // Customer Info
 
     //Column Headers

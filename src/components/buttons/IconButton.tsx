@@ -3,16 +3,40 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeProvider";
 import type { Theme } from "@/contexts/ThemeProvider";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
+import { useTranslation } from "react-i18next";
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const options: Array<{ value: Theme; label: string; icon: React.ReactNode }> = [
-    { value: "light", label: "Light", icon: <Sun className="h-4 w-4" /> },
-    { value: "dark-1", label: "Dark - 1", icon: <Moon className="h-4 w-4" /> },
-    { value: "dark-2", label: "Dark - 2", icon: <Moon className="h-4 w-4" /> },
-    { value: "dark-3", label: "Dark - 3", icon: <Moon className="h-4 w-4" /> },
-    { value: "dark-recommended", label: "Dark (Recommended)", icon: <Moon className="h-4 w-4" /> },
-  ];
+  const {t} = useTranslation();
+const options: Array<{ value: Theme; label: string; icon: React.ReactNode }> = [
+  {
+    value: "light",
+    label: t(LOCALIZATION_KEYS.THEME.LIGHT),
+    icon: <Sun className="h-4 w-4" />,
+  },
+  {
+    value: "dark-1",
+    label: t(LOCALIZATION_KEYS.THEME.DARK_1),
+    icon: <Moon className="h-4 w-4" />,
+  },
+  {
+    value: "dark-2",
+    label: t(LOCALIZATION_KEYS.THEME.DARK_2),
+    icon: <Moon className="h-4 w-4" />,
+  },
+  {
+    value: "dark-3",
+    label: t(LOCALIZATION_KEYS.THEME.DARK_3),
+    icon: <Moon className="h-4 w-4" />,
+  },
+  {
+    value: "dark-recommended",
+    label: t(LOCALIZATION_KEYS.THEME.DARK_RECOMMENDED),
+    icon: <Moon className="h-4 w-4" />,
+  },
+];
+
 
   return (
     <DropdownMenu>

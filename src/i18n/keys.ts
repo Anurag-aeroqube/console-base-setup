@@ -79,6 +79,15 @@ export const LOCALIZATION_KEYS = {
     HINDI: "lang.hindi",
   },
 
+  THEME: {
+  LIGHT: "theme.light",
+  DARK_1: "theme.dark1",
+  DARK_2: "theme.dark2",
+  DARK_3: "theme.dark3",
+  DARK_RECOMMENDED: "theme.darkrecommended",
+},
+
+
   // Customer Info
   //Column Headers
   COLS: {
