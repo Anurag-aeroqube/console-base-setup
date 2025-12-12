@@ -57,6 +57,16 @@ const HindiTranslations = {
     [LOCALIZATION_KEYS.LANG.ENGLISH]: "अंग्रेज़ी",
     [LOCALIZATION_KEYS.LANG.HINDI]: "हिंदी",
 
+    //THEME
+    
+  [LOCALIZATION_KEYS.THEME.LIGHT]: "लाइट",
+  [LOCALIZATION_KEYS.THEME.DARK_1]: "डार्क - 1",
+  [LOCALIZATION_KEYS.THEME.DARK_2]: "डार्क - 2",
+  [LOCALIZATION_KEYS.THEME.DARK_3]: "डार्क - 3",
+  [LOCALIZATION_KEYS.THEME.DARK_RECOMMENDED]: "डार्क (अनुशंसित)",
+
+
+
     // CUSTOMER INFO
 
     //COLUMN HEADERS
