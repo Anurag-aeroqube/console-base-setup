@@ -54,7 +54,7 @@ export default function ServicePointDetails() {
           </span>
         </h1>
 
-        <Button className="border bg-primary text-background">Actions ▾</Button>
+        <Button className="border bg-primary text-background">{t(LOCALIZATION_KEYS.SUMMARY_FIELDS.ACTIONS)} ▾</Button>
       </div>
 
       {/* TABS */}

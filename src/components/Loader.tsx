@@ -1,4 +1,6 @@
 import { useLoading } from "@/contexts/LoadingContext";
+import loaderAnimation from "@/assets/animations/loader.json"; 
+import Lottie from "lottie-react";
 
 export const Loader: React.FC = () => {
   const { isLoading } = useLoading();
@@ -21,10 +23,12 @@ export const Loader: React.FC = () => {
         zIndex: 9999,
       }}
     >
-      {/* Loading Text */}
-      <h2 className="text-primary font-semibold text-3xl" >
-        Loading...
-      </h2>
+      <Lottie
+        animationData={loaderAnimation}
+        loop
+        autoPlay
+        style={{ width: 250, height: 250 }}
+      />
     </div>
   );
 };

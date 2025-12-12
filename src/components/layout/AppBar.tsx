@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { useRBAC } from "@/contexts/RBACContext";
+import { LOCALIZATION_KEYS } from "@/i18n/keys";
 
 export default function Header() {
   const { user } = useRBAC();
@@ -96,7 +97,7 @@ const displayTitle = getPageTitle(location.pathname, t);
                     src={userData.avatar_url}
                   />
                 ) : (
-                  <div className="size-7 rounded-full bg-charcoal border bg-primary flex items-center justify-center">
+                  <div className="size-7 rounded-full  border bg-primary flex items-center justify-center">
                     {getInitials(userData.fullName)}
                   </div>
                 )}
@@ -109,15 +110,15 @@ const displayTitle = getPageTitle(location.pathname, t);
               </div>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-52 mr-5">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuContent className="w-52 mr-5 bg-accent">
+              <DropdownMenuLabel>{t(LOCALIZATION_KEYS.COMMON.MY_ACCOUNT)}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>{t(LOCALIZATION_KEYS.COMMON.SETTINGS)}</DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleLogout}
                 className="text-red-600 cursor-pointer"
               >
-                Log out
+                {t(LOCALIZATION_KEYS.COMMON.LOGOUT)}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

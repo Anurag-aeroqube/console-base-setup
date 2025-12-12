@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "light"; 
+export type Theme = "light" | "dark-1" | "dark-2" | "dark-3" |"dark-recommended";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -28,16 +28,21 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
 
   const [theme, setTheme] = useState<Theme>(() => {
-  const savedTheme = localStorage.getItem(storageKey);
-return savedTheme === "dark" || savedTheme === "light"
-  ? savedTheme
-  : defaultTheme;
+    const savedTheme = localStorage.getItem(storageKey) as Theme | null;
 
+    const validThemes: Theme[] = ["light", "dark-1", "dark-2" , "dark-3" ,"dark-recommended"];
+
+    return savedTheme && validThemes.includes(savedTheme)
+      ? savedTheme
+      : defaultTheme;
   });
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
+
+   
+    root.classList.remove("light", "dark-1","dark-2","dark-3", "dark-recommended");
+
 
     root.classList.add(theme);
   }, [theme]);

@@ -23,17 +23,17 @@ const SideNavContainer = () => {
       children: [
           {
           label: t(NAV.SERVICE_POINTS),
-          href: "/dashboard/service_points",
+          href: "/users/service_points",
           permission: "users:view" as PermissionString,
         },
         {
           label: t(NAV.MANAGE_USERS),
-          href: "/dashboard/users",
+          href: "/users/manage_users",
           permission: "users:view" as PermissionString,
         },
         {
           label: t(NAV.ROLES),
-          href: "/dashboard/roles",
+          href: "/users/roles",
           permission: "roles:view" as PermissionString,
         },
         
