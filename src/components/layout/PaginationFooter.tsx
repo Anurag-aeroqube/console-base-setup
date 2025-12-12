@@ -36,8 +36,8 @@ export default function PaginationFooter({
 }: PaginationFooterProps) {
   const { page, limit, total } = pagination;
   const totalPages = Math.ceil(total / limit);
-  const startItem = (page - 1) * limit + 1;
-  const endItem = Math.min(page * limit, total);
+  // const startItem = (page - 1) * limit + 1;
+  // const endItem = Math.min(page * limit, total);
   const { t } = useTranslation();
 
   // Generate page numbers for numbered pagination
